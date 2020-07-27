@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 
 export default function GDQRNavBar() {
     return (
-        <Navbar bg="light" expand="sm">
+        <Navbar bg="light" expand="sm" className="navigation-bar">
             <LinkContainer to="/" className="align-self-center">
                 <Navbar.Brand href="#home">GDQ-Rate</Navbar.Brand>
             </LinkContainer>

@@ -1,7 +1,7 @@
 import "./styles/App.css";
 import React from "react";
 
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 import GDQRNavBar from './components/navbar';
@@ -11,7 +11,7 @@ import Login from './routes/login';
 import Home from './routes/home';
 
 const client = new ApolloClient({
-    uri: "https://sgdq.shaneschulte.com/",
+    uri: "https://sgdq.shaneschulte.com/v1/graphql",
     cache: new InMemoryCache()
 });
 
@@ -19,8 +19,8 @@ export default function App() {
     return (
         <Router>
             <ApolloProvider client={client}>
-                <div>
-                    <GDQRNavBar/>
+                <div id="root-container">
+                    <GDQRNavBar />
 
                     <div className="main-body container">
                         <Switch>
@@ -31,7 +31,7 @@ export default function App() {
                                 <Profile />
                             </Route>
                             <Route path="/login">
-                                <Profile />
+                                <Login />
                             </Route>
                             <Route path="/">
                                 <Home />

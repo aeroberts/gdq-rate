@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
-import ALL_RUNS from "./constants/queries";
+import ALL_RUNS from "../constants/queries";
 
 export default function Runs() {
     const { loading, error, data } = useQuery(ALL_RUNS);
@@ -8,5 +8,5 @@ export default function Runs() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    return <h2>Alex</h2>;
+    return <h2>{JSON.stringify(data)}</h2>;
 }
