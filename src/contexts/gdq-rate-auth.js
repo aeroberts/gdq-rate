@@ -1,11 +1,11 @@
 import React from "react";
-import { useQuery } from '@apollo/client';
-import { USER_ID } from '../constants/queries';
+import { useQuery } from "@apollo/client";
+import { USER_ID } from "../constants/queries";
 
 export const AuthContext = React.createContext(null);
 
 /**
- * 
+ *
  * @param {{
   "data": {
     "users": [
@@ -18,7 +18,7 @@ export const AuthContext = React.createContext(null);
       }
     ]
   }
-}} data 
+}} data
  */
 
 function transformUserData(userData) {
@@ -30,10 +30,14 @@ function transformUserData(userData) {
     return null;
 }
 
-export const AuthContextProvider = ({children}) => {
-    const { loading, error, data: userData } = useQuery(USER_ID);
-    console.log("Data:", userData);
+export const AuthContextProvider = ({ children }) => {
+    const { loading, error, data: userData, refetch } = useQuery(USER_ID);
     const val = loading || error ? null : transformUserData(userData);
+
     if (loading) return null; // TODO: XXX: this is wack
-    return (<AuthContext.Provider value={val}>{children}</AuthContext.Provider>);
-}
+    return (
+        <AuthContext.Provider value={{ userData: val, refetch }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
