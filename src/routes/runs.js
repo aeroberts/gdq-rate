@@ -1,6 +1,6 @@
 import React from "react";
 import { useSubscription } from "@apollo/client";
-import ALL_RUNS from "../constants/queries";
+import { ALL_RUNS } from "../constants/queries";
 
 export default function Runs() {
     const { loading, error, data } = useSubscription(ALL_RUNS);
