@@ -8,5 +8,5 @@ export default function Runs() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
-    return <h2>{JSON.stringify(data)}</h2>;
+    return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
