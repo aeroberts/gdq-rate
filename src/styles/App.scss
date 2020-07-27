@@ -24,8 +24,10 @@ nav {
     }
 }
 
-.form-container {
-    padding: 8px;
-    border: 1px solid black;
-    border-radius: 8px;
+#login-container {
+    margin-top: 24px;
+
+    .is-submitting {
+        opacity: .5;
+    }
 }
