@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 const ALL_RUNS = gql`
-    query GetAllRuns {
+    subscription GetAllRuns {
         runs {
             game
             category
@@ -13,4 +13,4 @@ const ALL_RUNS = gql`
     }
 `;
 
-export default ALL_RUNS
+export default ALL_RUNS;
