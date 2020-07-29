@@ -1,6 +1,4 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import { Redirect } from "react-router-dom";
 import { AuthContext } from "../contexts/gdq-rate-auth";
 
@@ -19,7 +17,7 @@ export default function Logout() {
             }
             setRedirect(true);
         })();
-    }, []);
+    }, [refetch]);
 
     if (redirect) {
         return <Redirect to={"/"} />;
