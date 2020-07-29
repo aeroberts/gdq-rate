@@ -1,6 +1,5 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { USER_ID } from "../constants/queries";
+import { useUserInfoQuery } from "../generated/graphql";
 
 export const AuthContext = React.createContext<{
   userData: any;
@@ -34,10 +33,7 @@ function transformUserData(userData: any) {
 }
 
 export const AuthContextProvider = ({ children }: { children: any }) => {
-  const { loading, error, data: userData, refetch } = useQuery<
-    typeof USER_ID,
-    {}
-  >(USER_ID);
+  const { loading, error, data: userData, refetch } = useUserInfoQuery();
   const val = loading || error ? null : transformUserData(userData);
 
   if (loading) return null; // TODO: XXX: this is wack
