@@ -4,7 +4,7 @@ import { useUserInfoQuery } from "../generated/graphql";
 export const AuthContext = React.createContext<{
   userData: any;
   refetch(): void;
-}>({ userData: null, refetch: () => {} });
+}>({ userData: null, refetch: () => { } });
 
 /**
  *

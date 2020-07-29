@@ -15,5 +15,5 @@ export default function Runs() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return <RunsTable runs={data!.runs} />;
+  return <RunsTable runs={data!.runs} loggedIn={!!userData} />;
 }
