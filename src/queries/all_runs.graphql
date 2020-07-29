@@ -1,4 +1,4 @@
-subscription GetAllRuns {
+subscription GetAllRuns($userId: uuid, $loggedIn: Boolean!) {
   runs {
     game
     category
@@ -6,5 +6,18 @@ subscription GetAllRuns {
     platform
     run_id
     runner
+    scores_aggregate {
+      aggregate {
+        sum {
+          commentary_score
+          overall_score
+        }
+      }
+    }
+    myScores: scores(where: { user_id: { _eq: $userId } })
+      @include(if: $loggedIn) {
+      commentary_score
+      overall_score
+    }
   }
 }

@@ -726,7 +726,10 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
-export type GetAllRunsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+export type GetAllRunsSubscriptionVariables = Exact<{
+  userId?: Maybe<Scalars['uuid']>;
+  loggedIn: Scalars['Boolean'];
+}>;
 
 
 export type GetAllRunsSubscription = (
@@ -734,6 +737,19 @@ export type GetAllRunsSubscription = (
   & { runs: Array<(
     { __typename?: 'runs' }
     & Pick<Runs, 'game' | 'category' | 'duration' | 'platform' | 'run_id' | 'runner'>
+    & { scores_aggregate: (
+      { __typename?: 'scores_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'scores_aggregate_fields' }
+        & { sum?: Maybe<(
+          { __typename?: 'scores_sum_fields' }
+          & Pick<Scores_Sum_Fields, 'commentary_score' | 'overall_score'>
+        )> }
+      )> }
+    ), myScores: Array<(
+      { __typename?: 'scores' }
+      & Pick<Scores, 'commentary_score' | 'overall_score'>
+    )> }
   )> }
 );
 
@@ -750,7 +766,7 @@ export type UserInfoQuery = (
 
 
 export const GetAllRunsDocument = gql`
-    subscription GetAllRuns {
+    subscription GetAllRuns($userId: uuid, $loggedIn: Boolean!) {
   runs {
     game
     category
@@ -758,6 +774,18 @@ export const GetAllRunsDocument = gql`
     platform
     run_id
     runner
+    scores_aggregate {
+      aggregate {
+        sum {
+          commentary_score
+          overall_score
+        }
+      }
+    }
+    myScores: scores(where: {user_id: {_eq: $userId}}) @include(if: $loggedIn) {
+      commentary_score
+      overall_score
+    }
   }
 }
     `;
@@ -774,6 +802,8 @@ export const GetAllRunsDocument = gql`
  * @example
  * const { data, loading, error } = useGetAllRunsSubscription({
  *   variables: {
+ *      userId: // value for 'userId'
+ *      loggedIn: // value for 'loggedIn'
  *   },
  * });
  */
