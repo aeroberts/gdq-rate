@@ -1,0 +1,61 @@
+#!/bin/bash
+
+url="https://sgdq.shaneschulte.com/rest"
+
+cd $(git rev-parse --show-toplevel)
+
+getNowMs () { node -e 'console.log(Date.now())' | cat; }
+nowMs=$(getNowMs)
+
+checkRes() {
+    if ! echo "$res" | jq .message &> /dev/null; then
+        echo "$res" | jq
+        return 1
+    fi
+
+    expires_in=$(echo "$res" | jq .jwt_expires_in)
+    token=$(echo "$res" | jq .jwt_token)
+
+    expires_at=$((nowMs + expires_in))
+
+    echo "$expires_at" > .jwt_token
+    echo "$token" >> .jwt_token
+    exit 0
+}
+
+touch .jwt_cookies
+
+if [[ -f ".jwt_token" ]]; then
+    expires_at=$(head -n1 .jwt_token)
+
+    if [[ "$nowMs" -lt "$expires_at" ]]; then
+        # We're still valid!
+        exit 0
+    else
+        # We need to attempt a refresh
+        res=$(curl "$url/auth/token/refresh" \
+            -Ss \
+            -b '.jwt_cookies' \
+            -c '.jwt_cookies' \
+            -H "Content-Type: application/json" \
+        )
+
+        checkRes "$res"
+    fi
+fi
+
+
+read -p "Username: " username
+read -sp "Password: " password
+echo
+
+res=$(curl "$url/auth/login" \
+    -sS \
+    -X POST \
+    -b '.jwt_cookies' \
+    -c '.jwt_cookies' \
+    -d "{\"email\":\"$username\", \"password\":\"$password\"}" \
+    -H "Content-Type: application/json" \
+)
+
+exit $(checkRes "$res")
