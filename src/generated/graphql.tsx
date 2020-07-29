@@ -753,6 +753,34 @@ export type GetAllRunsSubscription = (
   )> }
 );
 
+export type GetSpecificRunSubscriptionVariables = Exact<{
+  userId?: Maybe<Scalars['uuid']>;
+  loggedIn: Scalars['Boolean'];
+  runId: Scalars['Int'];
+}>;
+
+
+export type GetSpecificRunSubscription = (
+  { __typename?: 'subscription_root' }
+  & { runs: Array<(
+    { __typename?: 'runs' }
+    & Pick<Runs, 'game' | 'category' | 'duration' | 'platform' | 'run_id' | 'runner'>
+    & { scores_aggregate: (
+      { __typename?: 'scores_aggregate' }
+      & { aggregate?: Maybe<(
+        { __typename?: 'scores_aggregate_fields' }
+        & { sum?: Maybe<(
+          { __typename?: 'scores_sum_fields' }
+          & Pick<Scores_Sum_Fields, 'commentary_score' | 'overall_score'>
+        )> }
+      )> }
+    ), myScores: Array<(
+      { __typename?: 'scores' }
+      & Pick<Scores, 'commentary_score' | 'overall_score'>
+    )> }
+  )> }
+);
+
 export type UserInfoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -812,6 +840,54 @@ export function useGetAllRunsSubscription(baseOptions?: ApolloReactHooks.Subscri
       }
 export type GetAllRunsSubscriptionHookResult = ReturnType<typeof useGetAllRunsSubscription>;
 export type GetAllRunsSubscriptionResult = ApolloReactCommon.SubscriptionResult<GetAllRunsSubscription>;
+export const GetSpecificRunDocument = gql`
+    subscription GetSpecificRun($userId: uuid, $loggedIn: Boolean!, $runId: Int!) {
+  runs(where: {run_id: {_eq: $runId}}) {
+    game
+    category
+    duration
+    platform
+    run_id
+    runner
+    scores_aggregate {
+      aggregate {
+        sum {
+          commentary_score
+          overall_score
+        }
+      }
+    }
+    myScores: scores(where: {user_id: {_eq: $userId}}) @include(if: $loggedIn) {
+      commentary_score
+      overall_score
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSpecificRunSubscription__
+ *
+ * To run a query within a React component, call `useGetSpecificRunSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpecificRunSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpecificRunSubscription({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      loggedIn: // value for 'loggedIn'
+ *      runId: // value for 'runId'
+ *   },
+ * });
+ */
+export function useGetSpecificRunSubscription(baseOptions?: ApolloReactHooks.SubscriptionHookOptions<GetSpecificRunSubscription, GetSpecificRunSubscriptionVariables>) {
+        return ApolloReactHooks.useSubscription<GetSpecificRunSubscription, GetSpecificRunSubscriptionVariables>(GetSpecificRunDocument, baseOptions);
+      }
+export type GetSpecificRunSubscriptionHookResult = ReturnType<typeof useGetSpecificRunSubscription>;
+export type GetSpecificRunSubscriptionResult = ApolloReactCommon.SubscriptionResult<GetSpecificRunSubscription>;
 export const UserInfoDocument = gql`
     query UserInfo {
   users {
