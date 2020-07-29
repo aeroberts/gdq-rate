@@ -1,14 +1,14 @@
 module.exports = {
   schema: [
     {
-      "https://hasura.io/learn/graphql": {
+      "https://sgdq.shaneschulte.com/v1/graphql": {
         headers: {
-          Authorization: "Bearer " + process.env.AUTH_TOKEN,
+          "X-Hasura-Admin-Secret": process.env.AUTH_TOKEN,
         },
       },
     },
   ],
-  documents: ["./src/**/*.tsx", "./src/**/*.ts"],
+  documents: ["./src/queries/*.graphql"],
   overwrite: true,
   generates: {
     "./src/generated/graphql.tsx": {

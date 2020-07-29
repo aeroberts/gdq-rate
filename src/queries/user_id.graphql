@@ -1,0 +1,9 @@
+query UserInfo {
+  users {
+    id
+    display_name
+    created_at
+    avatar_url
+    updated_at
+  }
+}

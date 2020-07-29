@@ -1,0 +1,10 @@
+subscription GetAllRuns {
+  runs {
+    game
+    category
+    duration
+    platform
+    run_id
+    runner
+  }
+}
