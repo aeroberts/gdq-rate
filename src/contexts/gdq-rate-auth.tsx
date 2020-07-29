@@ -5,7 +5,7 @@ import { USER_ID } from "../constants/queries";
 export const AuthContext = React.createContext<{
   userData: any;
   refetch(): void;
-} | null>(null);
+}>({ userData: null, refetch: () => {} });
 
 /**
  *
