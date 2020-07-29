@@ -6,6 +6,7 @@ import {
   myScoresColumns,
   flattenRuns,
 } from "../constants/runs-table-config";
+import { GetAllRunsSubscription } from "../generated/graphql";
 
 const { SearchBar } = Search;
 
@@ -19,7 +20,7 @@ interface UserScore {
   overall_score: string;
 }
 
-interface Run {
+export interface Run {
   game: string;
   category: string;
   duration: string;
@@ -31,7 +32,7 @@ interface Run {
 }
 
 interface Props {
-  runs: Run[];
+  runs: GetAllRunsSubscription["runs"];
   loggedIn: Boolean;
 }
 

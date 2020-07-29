@@ -1,6 +1,10 @@
+import { Run } from "../components/runs-table";
+import { GetAllRunsSubscription } from "../generated/graphql";
+
 interface Column {
   dataField: string;
   text: string;
+  sort?: boolean;
 }
 
 const columns: Column[] = [
@@ -42,7 +46,7 @@ const myScoresColumns = [
   },
 ];
 
-function flattenRuns(runs) {
+function flattenRuns(runs: GetAllRunsSubscription["runs"]) {
   return runs.map(
     ({
       game,
@@ -61,10 +65,11 @@ function flattenRuns(runs) {
         platform,
         runner,
         run_id,
-        aCommentaryScore: scores_aggregate.commentary_score,
-        aOverallScore: scores_aggregate.overall_score,
-        uCommentaryScore: myScores?.commentary_score,
-        uOverallScore: myScores?.overall_score,
+        aCommentaryScore: scores_aggregate?.aggregate?.sum?.overall_score,
+        aOverallScore: scores_aggregate?.aggregate?.sum?.overall_score,
+        uCommentaryScore:
+          myScores && myScores.length && myScores[0].commentary_score,
+        uOverallScore: myScores && myScores.length && myScores[0].overall_score,
       };
     }
   );
