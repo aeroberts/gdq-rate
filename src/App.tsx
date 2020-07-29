@@ -19,6 +19,7 @@ import Login from "./routes/login";
 import Logout from "./routes/logout";
 import Register from "./routes/register";
 import Home from "./routes/home";
+import Run from "./routes/run";
 
 const httpLink = new HttpLink({
   uri: `${window.location.origin}/v1/graphql`,
@@ -71,6 +72,9 @@ export default function App() {
               <Switch>
                 <Route path="/runs">
                   <Runs />
+                </Route>
+                <Route path="/run/:runId">
+                  <Run />
                 </Route>
                 <Route path="/profile">
                   <Profile />

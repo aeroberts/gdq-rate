@@ -1,17 +1,21 @@
 import { Run } from "../components/runs-table";
 import { GetAllRunsSubscription } from "../generated/graphql";
+import { ColumnDescription, ColumnFormatter } from "react-bootstrap-table-next";
+import { Link } from "react-router-dom";
+import React from "react";
 
-interface Column {
-  dataField: string;
-  text: string;
-  sort?: boolean;
-}
+interface Column extends ColumnDescription {}
+
+const gameFormatter: ColumnFormatter<any> = (cell, row) => {
+  return <Link to={"/run/" + row.run_id}>{cell}</Link>;
+};
 
 const columns: Column[] = [
   {
     dataField: "game",
     text: "Game",
     sort: true,
+    formatter: gameFormatter,
   },
   {
     dataField: "category",

@@ -1,0 +1,23 @@
+subscription GetSpecificRun($userId: uuid, $loggedIn: Boolean!, $runId: Int!) {
+  runs(where: { run_id: { _eq: $runId } }) {
+    game
+    category
+    duration
+    platform
+    run_id
+    runner
+    scores_aggregate {
+      aggregate {
+        sum {
+          commentary_score
+          overall_score
+        }
+      }
+    }
+    myScores: scores(where: { user_id: { _eq: $userId } })
+      @include(if: $loggedIn) {
+      commentary_score
+      overall_score
+    }
+  }
+}
