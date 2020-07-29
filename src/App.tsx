@@ -48,7 +48,7 @@ const authLink = setContext((_, { headers }) => {
 
 const link = split(
   ({ query }) => {
-    const { kind, operation } = getMainDefinition(query);
+    const { kind, operation } = getMainDefinition(query) as any;
     return kind === "OperationDefinition" && operation === "subscription";
   },
   wsLink,
@@ -56,7 +56,7 @@ const link = split(
 );
 
 const client = new ApolloClient({
-  link: authLink.concat(link),
+  link: authLink.concat(link as any),
   cache: new InMemoryCache(),
 });
 
