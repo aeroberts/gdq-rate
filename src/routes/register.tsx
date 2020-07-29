@@ -19,16 +19,13 @@ export default function Register() {
         <Formik
           initialValues={{ username: "", password: "", checkbox: false }}
           onSubmit={async ({ username: email, password }) => {
-            const resp = await window.fetch(
-              "/rest/auth/register",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email, password }),
-              }
-            );
+            const resp = await window.fetch("/rest/auth/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, password }),
+            });
             if (resp.status >= 200 && resp.status < 300) {
               setRedirect(true);
             }

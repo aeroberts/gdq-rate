@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
 const USER_ID = gql`
-query UserInfo {
+  query UserInfo {
     users {
       id
       display_name
@@ -13,16 +13,16 @@ query UserInfo {
 `;
 
 const ALL_RUNS = gql`
-    subscription GetAllRuns {
-        runs {
-            game
-            category
-            duration
-            platform
-            run_id
-            runner
-        }
+  subscription GetAllRuns {
+    runs {
+      game
+      category
+      duration
+      platform
+      run_id
+      runner
     }
+  }
 `;
 
 export { ALL_RUNS, USER_ID };

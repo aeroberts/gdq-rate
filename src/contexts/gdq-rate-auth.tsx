@@ -21,23 +21,23 @@ export const AuthContext = React.createContext(null);
 }} data
  */
 
-function transformUserData(userData) {
-    const { users } = userData;
+function transformUserData(userData: any) {
+  const { users } = userData;
 
-    if (users && Array.isArray(users) && users.length) {
-        return users[0];
-    }
-    return null;
+  if (users && Array.isArray(users) && users.length) {
+    return users[0];
+  }
+  return null;
 }
 
-export const AuthContextProvider = ({ children }) => {
-    const { loading, error, data: userData, refetch } = useQuery(USER_ID);
-    const val = loading || error ? null : transformUserData(userData);
+export const AuthContextProvider = ({ children }: { children: any }) => {
+  const { loading, error, data: userData, refetch } = useQuery(USER_ID);
+  const val = loading || error ? null : transformUserData(userData);
 
-    if (loading) return null; // TODO: XXX: this is wack
-    return (
-        <AuthContext.Provider value={{ userData: val, refetch }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  if (loading) return null; // TODO: XXX: this is wack
+  return (
+    <AuthContext.Provider value={{ userData: val, refetch }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
