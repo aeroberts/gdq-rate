@@ -3,7 +3,7 @@ module.exports = {
     {
       "https://sgdq.shaneschulte.com/v1/graphql": {
         headers: {
-          "X-Hasura-Admin-Secret": process.env.AUTH_TOKEN,
+          Authorization: "Bearer " + process.env.AUTH_TOKEN,
         },
       },
     },
