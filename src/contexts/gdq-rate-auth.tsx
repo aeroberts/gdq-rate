@@ -2,7 +2,10 @@ import React from "react";
 import { useQuery } from "@apollo/client";
 import { USER_ID } from "../constants/queries";
 
-export const AuthContext = React.createContext(null);
+export const AuthContext = React.createContext<{
+  userData: any;
+  refetch(): void;
+} | null>(null);
 
 /**
  *
@@ -31,7 +34,10 @@ function transformUserData(userData: any) {
 }
 
 export const AuthContextProvider = ({ children }: { children: any }) => {
-  const { loading, error, data: userData, refetch } = useQuery(USER_ID);
+  const { loading, error, data: userData, refetch } = useQuery<
+    typeof USER_ID,
+    {}
+  >(USER_ID);
   const val = loading || error ? null : transformUserData(userData);
 
   if (loading) return null; // TODO: XXX: this is wack
