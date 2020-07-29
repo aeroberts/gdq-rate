@@ -13,8 +13,8 @@ checkRes() {
         return 1
     fi
 
-    expires_in=$(echo "$res" | jq .jwt_expires_in)
-    token=$(echo "$res" | jq .jwt_token)
+    expires_in=$(echo "$res" | jq -r .jwt_expires_in)
+    token=$(echo "$res" | jq -r .jwt_token)
 
     expires_at=$((nowMs + expires_in))
 
