@@ -5,6 +5,8 @@
   "proxy": "https://sgdq.shaneschulte.com",
   "dependencies": {
     "@apollo/client": "^3.0.2",
+    "@apollo/react-common": "^3.1.4",
+    "@apollo/react-hooks": "^4.0.0",
     "@graphql-codegen/cli": "^1.17.6",
     "@graphql-codegen/introspection": "^1.17.6",
     "@graphql-codegen/typescript": "^1.17.6",

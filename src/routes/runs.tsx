@@ -1,12 +1,11 @@
 import React from "react";
-import { useSubscription } from "@apollo/client";
-import { ALL_RUNS } from "../constants/queries";
 import { RunsTable } from "../components/runs-table";
 import { AuthContext } from "../contexts/gdq-rate-auth";
+import { useGetAllRunsSubscription } from "../generated/graphql";
 
 export default function Runs() {
   const { userData } = React.useContext(AuthContext);
-  const { loading, error, data } = useSubscription(ALL_RUNS, {
+  const { loading, error, data } = useGetAllRunsSubscription({
     variables: {
       loggedIn: !!userData,
       userId: userData && userData.id,
@@ -16,5 +15,5 @@ export default function Runs() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return <RunsTable runs={data.runs} />;
+  return <RunsTable runs={data!.runs} />;
 }

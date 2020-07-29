@@ -5,8 +5,8 @@ interface Run {
   game: string;
   category: string;
   duration: string;
-  platform: string;
-  run_id: string;
+  platform?: string | null;
+  run_id: number;
   runner: string;
 }
 
