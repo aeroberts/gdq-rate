@@ -44,7 +44,7 @@ export default function Register() {
             isSubmitting,
           }) => (
             <Form
-              onSubmit={handleSubmit}
+              onSubmit={(handleSubmit as unknown) as any}
               className={isSubmitting ? "is-submitting" : ""}
             >
               <h2 className="mb-3">Register</h2>
