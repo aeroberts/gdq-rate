@@ -45,11 +45,12 @@ export const RunsTable: React.FC<Props> = ({ runs, loggedIn }) => {
       data={data}
       columns={loggedIn ? columns.concat(myScoresColumns) : columns}
       search
+      bootstrap4
     >
       {(props) => (
         <div>
           <SearchBar {...props.searchProps} className="search-bar" />
-          <BootstrapTable {...props.baseProps} bordered={false} />
+          <BootstrapTable {...props.baseProps} bordered={false} bootstrap4 />
         </div>
       )}
     </ToolkitProvider>

@@ -1,8 +1,8 @@
-import { Run } from "../components/runs-table";
 import { GetAllRunsSubscription } from "../generated/graphql";
 import { ColumnDescription, ColumnFormatter } from "react-bootstrap-table-next";
 import { Link } from "react-router-dom";
 import React from "react";
+import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 
 interface Column extends ColumnDescription {}
 
