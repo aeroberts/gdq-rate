@@ -1,0 +1,27 @@
+mutation InsertScore(
+  $commentary_comment: String!
+  $commentary_score: Int!
+  $gameplay_comment: String!
+  $gameplay_score: Int!
+  $overall_comment: String!
+  $overall_score: Int!
+  $rewatchable: Boolean!
+  $run_id: Int!
+  $summary_comment: String!
+) {
+  insert_scores_one(
+    object: {
+      commentary_comment: $commentary_comment
+      commentary_score: $commentary_score
+      gameplay_comment: $gameplay_comment
+      gameplay_score: $gameplay_score
+      overall_comment: $overall_comment
+      overall_score: $overall_score
+      rewatchable: $rewatchable
+      run_id: $run_id
+      summary_comment: $summary_comment
+    }
+  ) {
+    __typename
+  }
+}
