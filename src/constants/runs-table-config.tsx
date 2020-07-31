@@ -69,11 +69,13 @@ function flattenRuns(runs: GetAllRunsSubscription["runs"]) {
         platform,
         runner,
         run_id,
-        aCommentaryScore: scores_aggregate?.aggregate?.sum?.overall_score,
-        aOverallScore: scores_aggregate?.aggregate?.sum?.overall_score,
+        aCommentaryScore:
+          scores_aggregate?.aggregate?.sum?.overall_score || "-",
+        aOverallScore: scores_aggregate?.aggregate?.sum?.overall_score || "-",
         uCommentaryScore:
-          myScores && myScores.length && myScores[0].commentary_score,
-        uOverallScore: myScores && myScores.length && myScores[0].overall_score,
+          (myScores && myScores.length && myScores[0].commentary_score) || "-",
+        uOverallScore:
+          (myScores && myScores.length && myScores[0].overall_score) || "-",
       };
     }
   );
