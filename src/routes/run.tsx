@@ -20,9 +20,27 @@ export default function Run() {
   );
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
+
+  if (!data?.runs.length) {
+    return <p>Run not found</p>;
+  }
+  const run = data.runs[0];
+  console.log(run);
   return (
     <>
-      <pre>{JSON.stringify(data!.runs[0], null, 2)}</pre>
+      <h2 className="mb-3">{run.game}</h2>
+      <p>
+        <strong>Runner: </strong> {run.runner}
+      </p>
+      <p>
+        <strong>Platform: </strong> {run.platform}
+      </p>
+      <p>
+        <strong>Duration: </strong> {run.duration}
+      </p>
+      <p>
+        <strong>Category: </strong> {run.category}
+      </p>
       {!!userData ? <RatingForm runId={runId} /> : null}
     </>
   );
