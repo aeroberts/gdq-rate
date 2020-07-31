@@ -12,17 +12,8 @@ module.exports = {
   overwrite: true,
   generates: {
     "./src/generated/graphql.tsx": {
-      plugins: [
-        "typescript",
-        "typescript-operations",
-        "typescript-react-apollo",
-      ],
-      config: {
-        skipTypename: false,
-        withHooks: true,
-        withHOC: false,
-        withComponent: false,
-      },
+      plugins: ["typescript", "typescript-operations", "typed-document-node"],
+      config: {},
     },
     "./graphql.schema.json": {
       plugins: ["introspection"],
