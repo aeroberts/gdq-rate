@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { GetSpecificRunDocument } from "../generated/graphql";
 import { AuthContext } from "../contexts/gdq-rate-auth";
 import { useCachingSubscription } from "../hooks/useCachingSubscription";
+import RatingForm from "../components/rating-form";
 
 export default function Run() {
   const { runId } = useParams();
@@ -19,5 +20,10 @@ export default function Run() {
   );
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-  return <pre>{JSON.stringify(data!.runs[0], null, 2)}</pre>;
+  return (
+    <>
+      <pre>{JSON.stringify(data!.runs[0], null, 2)}</pre>
+      {!!userData ? <RatingForm runId={runId} /> : null}
+    </>
+  );
 }
