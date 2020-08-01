@@ -39,7 +39,33 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
   );
   const val = loading || error ? null : transformUserData(userData);
 
+  const [revalidated, setRevalidated] = React.useState(false);
+
+  React.useEffect(() => {
+    if (loading) return;
+    (async function () {
+      if (!val && localStorage.getItem("jwt_token")) {
+        const resp = await window.fetch("/rest/auth/token/refresh");
+        try {
+          const data = await resp.json();
+          if (resp.status >= 200 && resp.status < 300) {
+            const { jwt_token } = data;
+            localStorage.setItem("jwt_token", jwt_token);
+            await refetch();
+          } else {
+            setRevalidated(true);
+          }
+        } catch (e) {
+          setRevalidated(true);
+        }
+      }
+    })();
+  }, [loading, refetch, val]);
+
   if (loading) return null; // TODO: XXX: this is wack
+
+  if (!revalidated && !val) return null; // also wack but it's ok
+
   return (
     <AuthContext.Provider value={{ userData: val, refetch }}>
       {children}
