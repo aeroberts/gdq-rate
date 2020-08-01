@@ -77,7 +77,7 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
     if (loading || revalidated) return;
 
     (async function () {
-      if (!val && localStorage.getItem("jwt_token")) {
+      if (!val) {
         try {
           await refreshToken();
           await refetch();
