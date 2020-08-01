@@ -1,5 +1,6 @@
 node_modules
 yarn-error.log
 .hasura_admin_secret
+.google_client_secret
 .jwt_token
 .jwt_cookies
