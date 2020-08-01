@@ -33,34 +33,66 @@ function transformUserData(userData: any) {
   return null;
 }
 
+let refreshTimer: number | null = null;
+async function refreshToken() {
+  clearRefreshTimer();
+  try {
+    const resp = await window.fetch("/rest/auth/token/refresh");
+    if (resp.status < 200 || resp.status >= 300) {
+      throw "rejected refresh request";
+    }
+    const data = await resp.json();
+    const { jwt_token, jwt_expires_in } = data;
+    localStorage.setItem("jwt_token", jwt_token);
+    startRefreshTimer(jwt_expires_in * 0.75);
+  } catch (e) {
+    // Make sure the timer loop stays alive
+    startRefreshTimer(60 * 1000);
+    throw e;
+  }
+}
+
+export function startRefreshTimer(delay: number) {
+  clearRefreshTimer();
+  refreshTimer = window.setTimeout(refreshToken, delay);
+}
+
+export function clearRefreshTimer() {
+  if (refreshTimer) {
+    window.clearTimeout(refreshTimer);
+    refreshTimer = null;
+  }
+}
+
 export const AuthContextProvider = ({ children }: { children: any }) => {
   const { loading, error, data: userData, refetch } = useTypedQuery(
     UserInfoDocument
   );
   const val = loading || error ? null : transformUserData(userData);
 
+  // On initial page load - have we tried to refresh our dead token?
   const [revalidated, setRevalidated] = React.useState(false);
 
   React.useEffect(() => {
-    if (loading) return;
+    if (loading || revalidated) return;
+
     (async function () {
       if (!val && localStorage.getItem("jwt_token")) {
-        const resp = await window.fetch("/rest/auth/token/refresh");
         try {
-          const data = await resp.json();
-          if (resp.status >= 200 && resp.status < 300) {
-            const { jwt_token } = data;
-            localStorage.setItem("jwt_token", jwt_token);
-            await refetch();
-          } else {
-            setRevalidated(true);
-          }
+          await refreshToken();
+          await refetch();
         } catch (e) {
           setRevalidated(true);
         }
+      } else {
+        if (val) {
+          // Initiate the timer cycle if we're logged in
+          refreshToken();
+        }
+        setRevalidated(true);
       }
     })();
-  }, [loading, refetch, val]);
+  }, [loading, refetch, val, revalidated]);
 
   if (loading) return null; // TODO: XXX: this is wack
 

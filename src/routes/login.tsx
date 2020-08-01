@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Formik } from "formik";
 import { Redirect } from "react-router-dom";
-import { AuthContext } from "../contexts/gdq-rate-auth";
+import { AuthContext, startRefreshTimer } from "../contexts/gdq-rate-auth";
 
 export default function Login() {
   const [error, setError] = React.useState("");
@@ -34,8 +34,9 @@ export default function Login() {
             });
             const data = await resp.json();
             if (resp.status >= 200 && resp.status < 300) {
-              const { jwt_token } = data;
+              const { jwt_token, jwt_expires_in } = data;
               localStorage.setItem("jwt_token", jwt_token);
+              startRefreshTimer(jwt_expires_in * 0.75);
               await refetch();
               setRedirect(true);
             }
