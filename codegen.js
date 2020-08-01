@@ -1,7 +1,7 @@
 module.exports = {
   schema: [
     {
-      "https://sgdq.shaneschulte.com/v1/graphql": {
+      "https://sgdq.shaneschulte.com/hasura/v1/graphql": {
         headers: {
           Authorization: "Bearer " + process.env.AUTH_TOKEN,
         },

@@ -22,13 +22,13 @@ import Home from "./routes/home";
 import Run from "./routes/run";
 
 const httpLink = new HttpLink({
-  uri: `${window.location.origin}/v1/graphql`,
+  uri: `${window.location.origin}/hasura/v1/graphql`,
 });
 
 const wsLink = new WebSocketLink({
   uri: `${window.location.protocol.includes("s") ? "wss" : "ws"}://${
     window.location.host
-  }/v1/graphql`,
+  }/hasura/v1/graphql`,
   options: {
     reconnect: true,
   },
