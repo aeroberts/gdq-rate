@@ -1,0 +1,269 @@
+- table:
+    schema: auth
+    name: account_providers
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+  - name: provider
+    using:
+      foreign_key_constraint_on: auth_provider
+- table:
+    schema: auth
+    name: account_roles
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+  - name: roleByRole
+    using:
+      foreign_key_constraint_on: role
+- table:
+    schema: auth
+    name: accounts
+  object_relationships:
+  - name: role
+    using:
+      foreign_key_constraint_on: default_role
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  array_relationships:
+  - name: account_providers
+    using:
+      foreign_key_constraint_on:
+        column: account_id
+        table:
+          schema: auth
+          name: account_providers
+  - name: account_roles
+    using:
+      foreign_key_constraint_on:
+        column: account_id
+        table:
+          schema: auth
+          name: account_roles
+  - name: refresh_tokens
+    using:
+      foreign_key_constraint_on:
+        column: account_id
+        table:
+          schema: auth
+          name: refresh_tokens
+- table:
+    schema: auth
+    name: providers
+  array_relationships:
+  - name: account_providers
+    using:
+      foreign_key_constraint_on:
+        column: auth_provider
+        table:
+          schema: auth
+          name: account_providers
+- table:
+    schema: auth
+    name: refresh_tokens
+  object_relationships:
+  - name: account
+    using:
+      foreign_key_constraint_on: account_id
+- table:
+    schema: auth
+    name: roles
+  array_relationships:
+  - name: account_roles
+    using:
+      foreign_key_constraint_on:
+        column: role
+        table:
+          schema: auth
+          name: account_roles
+  - name: accounts
+    using:
+      foreign_key_constraint_on:
+        column: default_role
+        table:
+          schema: auth
+          name: accounts
+- table:
+    schema: public
+    name: runs
+  array_relationships:
+  - name: scores
+    using:
+      foreign_key_constraint_on:
+        column: run_id
+        table:
+          schema: public
+          name: scores
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - game
+      - category
+      - runner
+      - duration
+      - run_id
+      - platform
+      filter: {}
+  - role: user
+    permission:
+      columns:
+      - game
+      - category
+      - runner
+      - duration
+      - run_id
+      - platform
+      filter: {}
+- table:
+    schema: public
+    name: scores
+  object_relationships:
+  - name: run
+    using:
+      foreign_key_constraint_on: run_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+  insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+        - user_id:
+            _eq: X-Hasura-User-Id
+        - overall_score:
+            _lte: 5
+        - overall_score:
+            _gt: 0
+        - gameplay_score:
+            _gt: 0
+        - gameplay_score:
+            _lte: 5
+        - commentary_score:
+            _gt: 0
+        - commentary_score:
+            _lte: 5
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+      - commentary_comment
+      - commentary_score
+      - gameplay_comment
+      - gameplay_score
+      - overall_comment
+      - overall_score
+      - rewatchable
+      - run_id
+      - summary_comment
+      backend_only: false
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - commentary_score
+      - commentary_comment
+      - gameplay_score
+      - gameplay_comment
+      - overall_score
+      - overall_comment
+      - rewatchable
+      - summary_comment
+      - run_id
+      - user_id
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+      - rewatchable
+      - commentary_score
+      - gameplay_score
+      - overall_score
+      - run_id
+      - commentary_comment
+      - gameplay_comment
+      - overall_comment
+      - summary_comment
+      - user_id
+      filter: {}
+      allow_aggregations: true
+  update_permissions:
+  - role: user
+    permission:
+      columns:
+      - commentary_comment
+      - commentary_score
+      - gameplay_comment
+      - gameplay_score
+      - overall_comment
+      - overall_score
+      - rewatchable
+      - summary_comment
+      filter:
+        _and:
+        - user_id:
+            _eq: X-Hasura-User-Id
+        - overall_score:
+            _lte: 5
+        - overall_score:
+            _gt: 0
+        - gameplay_score:
+            _gt: 0
+        - gameplay_score:
+            _lte: 5
+        - commentary_score:
+            _gt: 0
+        - commentary_score:
+            _lte: 5
+      check: {}
+      set:
+        user_id: x-hasura-User-Id
+- table:
+    schema: public
+    name: users
+  object_relationships:
+  - name: account
+    using:
+      manual_configuration:
+        remote_table:
+          schema: auth
+          name: accounts
+        column_mapping:
+          id: user_id
+  array_relationships:
+  - name: scores
+    using:
+      foreign_key_constraint_on:
+        column: user_id
+        table:
+          schema: public
+          name: scores
+  select_permissions:
+  - role: public
+    permission:
+      columns:
+      - id
+      - created_at
+      - updated_at
+      - display_name
+      - avatar_url
+      filter:
+        id:
+          _is_null: true
+      limit: 1
+  - role: user
+    permission:
+      columns:
+      - avatar_url
+      - created_at
+      - display_name
+      - id
+      - updated_at
+      filter:
+        id:
+          _eq: X-Hasura-User-Id
+      limit: 1
