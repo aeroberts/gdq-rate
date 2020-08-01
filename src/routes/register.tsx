@@ -17,14 +17,22 @@ export default function Register() {
     <Card id="login-container">
       <Card.Body>
         <Formik
-          initialValues={{ username: "", password: "", checkbox: false }}
-          onSubmit={async ({ username: email, password }) => {
+          initialValues={{ email: "", password: "", password2: "" }}
+          onSubmit={async ({ email, password, password2 }) => {
+            if (password !== password2) {
+              setError("Passwords don't match");
+              return;
+            }
+            if (password.length < 5) {
+              setError("Password needs to be at least 5 characters long");
+              return;
+            }
             const resp = await window.fetch("/rest/auth/register", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ email, password }),
+              body: JSON.stringify({ email, password, password2 }),
             });
             if (resp.status >= 200 && resp.status < 300) {
               setRedirect(true);
@@ -48,33 +56,51 @@ export default function Register() {
               className={isSubmitting ? "is-submitting" : ""}
             >
               <h2 className="mb-3">Register</h2>
-              <Form.Group controlId="username">
+              <Form.Group controlId="email">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Enter username"
-                  name="username"
-                  value={values.username}
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  value={values.email}
+                  autoComplete="email"
+                  required
                   onChange={handleChange}
                 />
               </Form.Group>
 
-              <Form.Group controlId="password-2">
+              <Form.Group controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Password"
                   name="password"
+                  minLength={5}
                   value={values.password}
+                  required
                   onChange={handleChange}
                 />
               </Form.Group>
-              <Form.Group controlId="nice">
-                <Form.Check type="checkbox" label="Check me out" />
+
+              <Form.Group controlId="password2">
+                <Form.Label>Confirm password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm password"
+                  name="password2"
+                  value={values.password2}
+                  required
+                  onChange={handleChange}
+                />
               </Form.Group>
               {error ? <p className="text-danger">{error}</p> : null}
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
-                Submit
+              <Button
+                variant="primary"
+                type="submit"
+                className="sign-in-button"
+                disabled={isSubmitting}
+              >
+                Register
               </Button>
             </Form>
           )}

@@ -21,11 +21,10 @@ export default function Login() {
       <Card.Body>
         <Formik
           initialValues={{
-            username: "",
+            email: "",
             password: "",
-            checkbox: false,
           }}
-          onSubmit={async ({ username: email, password }) => {
+          onSubmit={async ({ email, password }) => {
             const resp = await window.fetch("/rest/auth/login", {
               method: "POST",
               headers: {
@@ -58,14 +57,16 @@ export default function Login() {
               className={isSubmitting ? "is-submitting" : ""}
             >
               <h2 className="mb-3">Login</h2>
-              <Form.Group controlId="username">
+              <Form.Group controlId="email">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control
-                  type="text"
-                  placeholder="Enter username"
-                  name="username"
-                  value={values.username}
+                  type="email"
+                  placeholder="Enter email"
+                  name="email"
+                  value={values.email}
+                  autoComplete="email"
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
 
@@ -76,20 +77,35 @@ export default function Login() {
                   placeholder="Password"
                   name="password"
                   value={values.password}
+                  autoComplete="password"
                   onChange={handleChange}
+                  required
                 />
               </Form.Group>
-              <Form.Group controlId="nice">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
               {error ? <p className="text-danger">{error}</p> : null}
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
-                Submit
+              <Button
+                variant="primary"
+                type="submit"
+                className="sign-in-button"
+                disabled={isSubmitting}
+              >
+                Sign in
               </Button>
             </Form>
           )}
         </Formik>
+        <GoogleAuthButton />
       </Card.Body>
     </Card>
+  );
+}
+
+function GoogleAuthButton() {
+  return (
+    <div className="google-auth-button">
+      <a href="https://sgdq.shaneschulte.com/rest/auth/providers/google">
+        <div />
+      </a>
+    </div>
   );
 }

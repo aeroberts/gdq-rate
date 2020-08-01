@@ -25,7 +25,6 @@ export default function Run() {
     return <p>Run not found</p>;
   }
   const run = data.runs[0];
-  console.log(run);
   return (
     <>
       <h2 className="mb-3">{run.game}</h2>
@@ -41,7 +40,7 @@ export default function Run() {
       <p>
         <strong>Category: </strong> {run.category}
       </p>
-      {!!userData ? <RatingForm runId={runId} /> : null}
+      {!!userData ? <RatingForm runId={runId} /> : <p>Login to rate</p>}
     </>
   );
 }
