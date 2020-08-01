@@ -2,7 +2,7 @@
 
 url="https://sgdq.shaneschulte.com/rest"
 
-cd $(git rev-parse --show-toplevel)
+cd "$REPO_ROOT"
 
 getNowMs () { node -e 'console.log(Date.now())' | cat; }
 nowMs=$(getNowMs)

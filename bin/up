@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd "$REPO_ROOT"
+cd docker
+
+sudo direnv exec . docker-compose up $@
