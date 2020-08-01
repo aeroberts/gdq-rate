@@ -4,7 +4,7 @@ services:
     image: postgres:12
     restart: always
     environment:
-      POSTGRES_PASSWORD: "pgpassword"
+      POSTGRES_PASSWORD: "${HASURA_GRAPHQL_ADMIN_SECRET}"
     volumes:
       - db_data:/var/lib/postgresql/data
   graphql-engine:
@@ -15,7 +15,7 @@ services:
       - 'postgres'
     restart: always
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: 'postgres://postgres:pgpassword@postgres:5432/postgres'
+      HASURA_GRAPHQL_DATABASE_URL: 'postgres://postgres:${HASURA_GRAPHQL_ADMIN_SECRET}@postgres:5432/postgres'
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET}"
       HASURA_GRAPHQL_JWT_SECRET: '{"type": "RS256", "jwk_url": "http://hasura-backend-plus:3000/auth/jwks"}'
       HASURA_GRAPHQL_ENABLE_CONSOLE: 'false'
