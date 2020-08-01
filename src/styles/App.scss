@@ -9,6 +9,11 @@ nav {
   }
 }
 
+table {
+  overflow-x: scroll;
+  min-width: 768px;
+}
+
 #root-container {
   display: flex;
   flex-direction: column;

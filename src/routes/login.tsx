@@ -91,10 +91,10 @@ export default function Login() {
               >
                 Sign in
               </Button>
+              <GoogleAuthButton />
             </Form>
           )}
         </Formik>
-        <GoogleAuthButton />
       </Card.Body>
     </Card>
   );

@@ -48,7 +48,7 @@ export const RunsTable: React.FC<Props> = ({ runs, loggedIn }) => {
       bootstrap4
     >
       {(props) => (
-        <div>
+        <div className="table-responsive">
           <SearchBar {...props.searchProps} className="search-bar" />
           <BootstrapTable {...props.baseProps} bordered={false} bootstrap4 />
         </div>
