@@ -1,12 +1,12 @@
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
 
-nav {
-  .avatar {
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-  }
+.avatar {
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 table {

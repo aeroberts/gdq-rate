@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../contexts/gdq-rate-auth";
+import { Avatar } from "./avatar";
 
 export default function GDQRNavBar() {
   const { userData } = React.useContext(AuthContext);
@@ -22,14 +23,11 @@ export default function GDQRNavBar() {
         <Navbar.Text className="justify-content-end">
           <LinkContainer to="/profile" className="align-self-center">
             <Nav.Link>
-              <img
-                className="avatar"
-                alt="Profile Avatar"
-                src={
-                  userData.avatar_url ||
-                  "https://avatars2.githubusercontent.com/u/8890027?s=460&u=82f8be7c74d22442ac93b0125649e591f8944032&v=4"
-                }
-              ></img>
+              <Avatar
+                uri={userData.avatar_url}
+                name={userData.display_name}
+                size={40}
+              />
             </Nav.Link>
           </LinkContainer>
         </Navbar.Text>
