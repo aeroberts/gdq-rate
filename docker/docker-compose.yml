@@ -33,6 +33,7 @@ services:
       JWT_ALGORITHM: RS256
       AUTO_MIGRATE: "true"
       GOOGLE_ENABLE: "true"
+      REGISTRATION_CUSTOM_FIELDS: "display_name"
       GOOGLE_CLIENT_ID: "487235771471-og6uv9lp2637ip2f3lprbocne23r8d01.apps.googleusercontent.com"
       GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET}"
       REDIRECT_URL_SUCCESS: "https://sgdq.shaneschulte.com/"
