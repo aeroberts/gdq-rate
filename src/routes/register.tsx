@@ -17,8 +17,13 @@ export default function Register() {
     <Card id="login-container">
       <Card.Body>
         <Formik
-          initialValues={{ email: "", password: "", password2: "" }}
-          onSubmit={async ({ email, password, password2 }) => {
+          initialValues={{
+            email: "",
+            password: "",
+            password2: "",
+            display_name: "",
+          }}
+          onSubmit={async ({ email, password, password2, display_name }) => {
             if (password !== password2) {
               setError("Passwords don't match");
               return;
@@ -32,7 +37,13 @@ export default function Register() {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ email, password, password2 }),
+              body: JSON.stringify({
+                email,
+                password,
+                user_data: {
+                  display_name,
+                },
+              }),
             });
             if (resp.status >= 200 && resp.status < 300) {
               setRedirect(true);
@@ -64,6 +75,19 @@ export default function Register() {
                   name="email"
                   value={values.email}
                   autoComplete="email"
+                  required
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group controlId="display_name">
+                <Form.Label>Display Name</Form.Label>
+                <Form.Control
+                  type="display_name"
+                  placeholder="Enter display name"
+                  name="display_name"
+                  value={values.display_name}
+                  autoComplete="display_name"
+                  minLength={3}
                   required
                   onChange={handleChange}
                 />

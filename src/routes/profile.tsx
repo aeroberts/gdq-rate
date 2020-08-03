@@ -12,9 +12,13 @@ export default function Profile() {
   const { userData } = React.useContext(AuthContext);
   let { loading, error, data } = useCachingSubscription(GetUserRunsDocument, {
     variables: {
-      userId: userId || (userData && userData.user_id),
+      userId: userId || userData?.user_id,
     },
   });
+
+  if (!userId && !userData?.user_id) {
+    return <p>You must be logged in to view this page</p>;
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
