@@ -1,13 +1,9 @@
+import { Formik } from "formik";
 import React from "react";
-import Form from "react-bootstrap/Form";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Formik } from "formik";
-import { Redirect } from "react-router-dom";
-import { AuthContext } from "../contexts/gdq-rate-auth";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import { InsertScoreDocument } from "../generated/graphql";
 import { useTypedMutation } from "../hooks/useTypedMutation";
 
@@ -50,8 +46,6 @@ function InputRow({
   );
 }
 export default function RatingForm({ runId }: { runId: number }) {
-  const { userData } = React.useContext(AuthContext);
-
   const [insertScore, { error }] = useTypedMutation(InsertScoreDocument, {
     onError: () => {},
   });

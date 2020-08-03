@@ -39,7 +39,7 @@ async function refreshToken() {
   try {
     const resp = await window.fetch("/rest/auth/token/refresh");
     if (resp.status < 200 || resp.status >= 300) {
-      throw "rejected refresh request";
+      throw new Error("rejected refresh request");
     }
     const data = await resp.json();
     const { jwt_token, jwt_expires_in } = data;
@@ -52,9 +52,15 @@ async function refreshToken() {
   }
 }
 
+async function wrappedRefreshToken() {
+  try {
+    await refreshToken();
+  } catch (e) {}
+}
+
 export function startRefreshTimer(delay: number) {
   clearRefreshTimer();
-  refreshTimer = window.setTimeout(refreshToken, delay);
+  refreshTimer = window.setTimeout(wrappedRefreshToken, delay);
 }
 
 export function clearRefreshTimer() {
@@ -82,12 +88,14 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
           await refreshToken();
           await refetch();
         } catch (e) {
+          // We aren't signed in
+          clearRefreshTimer();
           setRevalidated(true);
         }
       } else {
         if (val) {
           // Initiate the timer cycle if we're logged in
-          refreshToken();
+          wrappedRefreshToken();
         }
         setRevalidated(true);
       }

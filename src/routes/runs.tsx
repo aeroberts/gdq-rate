@@ -2,7 +2,6 @@ import React from "react";
 import { RunsTable } from "../components/runs-table";
 import { AuthContext } from "../contexts/gdq-rate-auth";
 import { GetAllRunsDocument } from "../generated/graphql";
-import { useApolloClient, gql, DocumentNode } from "@apollo/react-hooks";
 import { useCachingSubscription } from "../hooks/useCachingSubscription";
 
 export default function Runs() {
