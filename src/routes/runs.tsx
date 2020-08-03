@@ -9,7 +9,7 @@ export default function Runs() {
   let { loading, error, data } = useCachingSubscription(GetAllRunsDocument, {
     variables: {
       loggedIn: !!userData,
-      userId: userData && userData.id,
+      userId: userData && userData.user_id,
     },
   });
 

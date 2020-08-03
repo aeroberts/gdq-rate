@@ -76,7 +76,7 @@ export default function App() {
                 <Route path="/run/:runId">
                   <Run />
                 </Route>
-                <Route path="/profile">
+                <Route path="/profile/:userId?">
                   <Profile />
                 </Route>
                 <Route path="/login">

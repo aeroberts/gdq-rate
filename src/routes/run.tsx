@@ -13,7 +13,7 @@ export default function Run() {
     {
       variables: {
         loggedIn: !!userData,
-        userId: userData && userData.id,
+        userId: userData && userData.user_id,
         runId,
       },
     }

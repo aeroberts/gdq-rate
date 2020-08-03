@@ -1,6 +1,6 @@
 query UserInfo {
-  users {
-    id
+  current_user_v {
+    user_id
     display_name
     created_at
     avatar_url

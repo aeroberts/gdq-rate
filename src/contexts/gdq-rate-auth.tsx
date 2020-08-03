@@ -1,9 +1,10 @@
 import React from "react";
-import { UserInfoDocument } from "../generated/graphql";
+import { UserInfoDocument, UserInfoQuery } from "../generated/graphql";
 import { useTypedQuery } from "../hooks/useTypedQuery";
+import { UserInfo } from "os";
 
 export const AuthContext = React.createContext<{
-  userData: any;
+  userData: UserData;
   refetch(): void;
 }>({ userData: null, refetch: () => {} });
 
@@ -23,9 +24,11 @@ export const AuthContext = React.createContext<{
   }
 }} data
  */
+type ArrayOf<T extends any[]> = T extends Array<infer U> ? U : never;
 
-function transformUserData(userData: any) {
-  const { users } = userData;
+type UserData = ArrayOf<UserInfoQuery["current_user_v"]> | null;
+function transformUserData(userData: any): UserData {
+  const { current_user_v: users } = userData;
 
   if (users && Array.isArray(users) && users.length) {
     return users[0];

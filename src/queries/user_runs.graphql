@@ -1,0 +1,24 @@
+query GetUserRuns($userId: uuid) {
+  scores(where: { user_id: { _eq: $userId } }) {
+    commentary_comment
+    commentary_score
+    gameplay_comment
+    gameplay_score
+    overall_comment
+    overall_score
+    rewatchable
+    summary_comment
+    run {
+      run_id
+      runner
+      game
+      platform
+      duration
+      category
+    }
+  }
+  users(where: { id: { _eq: $userId } }) {
+    display_name
+    avatar_url
+  }
+}
