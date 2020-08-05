@@ -62,7 +62,6 @@ function colorFromString(name: string) {
   const l = mapToRange(r, [0, 1000], lRange);
 
   const a = rgbToHex(hslToRgb([h, s, l]));
-  console.log(a);
   return a;
 }
 

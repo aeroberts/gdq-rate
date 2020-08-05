@@ -75,6 +75,14 @@ table {
   }
 }
 
+#rating-container {
+  margin-top: 24px;
+
+  .is-submitting {
+    opacity: 0.5;
+  }
+}
+
 .search-label {
   display: block;
 }

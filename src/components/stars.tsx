@@ -9,11 +9,11 @@ export function Stars({ val }: { val: number }) {
     <>
       {Array.apply(null, { length: 5 } as any).map((_, i) =>
         i + 1 - val > 0.75 ? (
-          <StarEmpty />
+          <StarEmpty key={i} />
         ) : i + 1 - val > 0.25 ? (
-          <StarHalf />
+          <StarHalf key={i} />
         ) : (
-          <StarFilled />
+          <StarFilled key={i} />
         )
       )}
     </>

@@ -1,7 +1,6 @@
 import React from "react";
 import { UserInfoDocument, UserInfoQuery } from "../generated/graphql";
 import { useTypedQuery } from "../hooks/useTypedQuery";
-import { UserInfo } from "os";
 
 export const AuthContext = React.createContext<{
   userData: UserData;

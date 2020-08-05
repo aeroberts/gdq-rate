@@ -1,47 +1,44 @@
-import { Formik } from "formik";
+import { Formik, FormikErrors } from "formik";
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import { InsertScoreDocument } from "../generated/graphql";
 import { useTypedMutation } from "../hooks/useTypedMutation";
+import StarInput from "./star-input";
 
 function InputRow({
   handleChange,
   name,
   values,
+  errors,
 }: {
   handleChange(): void;
   name: string;
   values: Record<string, any>;
+  errors: Record<string, any>;
 }) {
   return (
     <Form.Group controlId={`${name}_comment`}>
-      <Form.Label>{name}</Form.Label>
-      <InputGroup>
-        <Form.Control
-          as="select"
-          custom
-          className="col-sm-2"
-          name={`${name}_score`}
-          value={values[`${name}_score`]}
-          onChange={handleChange}
-        >
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </Form.Control>
-        <Form.Control
-          type="text"
-          placeholder={`${name} comments`}
-          name={`${name}_comment`}
-          value={values[`${name}_comment`]}
-          onChange={handleChange}
-        />
-      </InputGroup>
+      <div style={{ display: "flex" }}>
+        <Form.Label>
+          {name[0].toUpperCase()}
+          {name.substr(1)}
+        </Form.Label>
+        <div className="mb-3 ml-2">
+          <StarInput
+            name={`${name}_score`}
+            error={Boolean(errors[`${name}_score`])}
+          />
+        </div>
+      </div>
+      <Form.Control
+        as="textarea"
+        placeholder={`additonal comments (optional)`}
+        name={`${name}_comment`}
+        value={values[`${name}_comment`]}
+        onChange={handleChange}
+      />
     </Form.Group>
   );
 }
@@ -51,21 +48,36 @@ export default function RatingForm({ runId }: { runId: number }) {
   });
 
   return (
-    <Card id="rating-container">
+    <Card id="rating-container" className="mb-3">
       <Card.Body>
         <Formik
           initialValues={{
             commentary_comment: "",
-            commentary_score: 1,
+            commentary_score: 0,
             gameplay_comment: "",
-            gameplay_score: 1,
+            gameplay_score: 0,
             overall_comment: "",
-            overall_score: 1,
+            overall_score: 0,
             summary_comment: "",
             rewatchable: false,
           }}
+          validateOnBlur={false}
+          validateOnChange={false}
+          validate={(values) => {
+            const errors: FormikErrors<typeof values> = {};
+            if (!values.commentary_score) {
+              errors.commentary_score = "cannot be 0";
+            }
+            if (!values.gameplay_score) {
+              errors.gameplay_score = "cannot be 0";
+            }
+            if (!values.overall_score) {
+              errors.overall_score = "cannot be 0";
+            }
+            return errors;
+          }}
           onSubmit={async (vals) => {
-            insertScore({
+            await insertScore({
               variables: {
                 ...vals,
                 run_id: runId,
@@ -87,35 +99,34 @@ export default function RatingForm({ runId }: { runId: number }) {
               onSubmit={(handleSubmit as unknown) as any}
               className={isSubmitting ? "is-submitting" : ""}
             >
-              <h2 className="mb-3">Rate me</h2>
-
               <InputRow
                 handleChange={handleChange as any}
                 name="commentary"
                 values={values}
+                errors={errors}
               />
               <InputRow
                 handleChange={handleChange as any}
                 name="gameplay"
                 values={values}
+                errors={errors}
               />
               <InputRow
                 handleChange={handleChange as any}
                 name="overall"
                 values={values}
+                errors={errors}
               />
 
               <Form.Group controlId="summary_comment">
-                <Form.Label>
-                  Summary
-                  <Form.Control
-                    type="text"
-                    placeholder="Summary comments"
-                    name="summary_comment"
-                    value={values.summary_comment}
-                    onChange={handleChange}
-                  />
-                </Form.Label>
+                <Form.Label className="mb-3">Summary</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  placeholder="Summary comments (optional)"
+                  name="summary_comment"
+                  value={values.summary_comment}
+                  onChange={handleChange}
+                />
               </Form.Group>
               <Form.Group controlId="rewatchable">
                 <Form.Check

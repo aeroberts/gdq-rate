@@ -1,15 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { GetSpecificRunDocument } from "../generated/graphql";
-import { AuthContext } from "../contexts/gdq-rate-auth";
-import { useCachingSubscription } from "../hooks/useCachingSubscription";
-import RatingForm from "../components/rating-form";
 import { Comment } from "../components/comment";
-import CardColumns from "react-bootstrap/esm/CardColumns";
-import StarFilled from "../icons/StarFilled";
-import StarEmpty from "../icons/StarEmpty";
-import StarHalf from "../icons/StarHalf";
+import RatingForm from "../components/rating-form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 import { Stars } from "../components/stars";
+import { AuthContext } from "../contexts/gdq-rate-auth";
+import { GetSpecificRunDocument } from "../generated/graphql";
+import { useCachingSubscription } from "../hooks/useCachingSubscription";
 
 export default function Run() {
   const { runId } = useParams();
@@ -31,42 +30,71 @@ export default function Run() {
     return <p>Run not found</p>;
   }
   const run = data.runs[0];
+
   return (
     <>
-      <h2 className="mb-3">{run.game}</h2>
-      <p>
-        <strong>Runner: </strong> {run.runner}
-      </p>
-      <p>
-        <strong>Platform: </strong> {run.platform}
-      </p>
-      <p>
-        <strong>Duration: </strong> {run.duration}
-      </p>
-      <p>
-        <strong>Category: </strong> {run.category}
-      </p>
-      <p>
-        <strong>Commentary: </strong>{" "}
-        <Stars
-          val={run.scores_aggregate.aggregate?.avg?.commentary_score ?? 0}
-        />
-      </p>
-      <p>
-        <strong>Gameplay: </strong>{" "}
-        <Stars val={run.scores_aggregate.aggregate?.avg?.gameplay_score ?? 0} />
-      </p>
-      <p>
-        <strong>Overall: </strong>{" "}
-        <Stars val={run.scores_aggregate.aggregate?.avg?.overall_score ?? 0} />
-      </p>
+      <Row>
+        <Col md className="mb-3">
+          <Card>
+            <Card.Body>
+              <Card.Title>{run.game}</Card.Title>
+              <p>
+                <strong>Runner: </strong> {run.runner}
+              </p>
+              <p>
+                <strong>Platform: </strong> {run.platform}
+              </p>
+              <p>
+                <strong>Duration: </strong> {run.duration}
+              </p>
+              <p>
+                <strong>Category: </strong> {run.category}
+              </p>
+              <p>
+                <strong>Commentary: </strong>{" "}
+                <Stars
+                  val={
+                    run.scores_aggregate.aggregate?.avg?.commentary_score ?? 0
+                  }
+                />
+              </p>
+              <p>
+                <strong>Gameplay: </strong>{" "}
+                <Stars
+                  val={run.scores_aggregate.aggregate?.avg?.gameplay_score ?? 0}
+                />
+              </p>
+              <p>
+                <strong>Overall: </strong>{" "}
+                <Stars
+                  val={run.scores_aggregate.aggregate?.avg?.overall_score ?? 0}
+                />
+              </p>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col md className="mb-3">
+          {!!userData ? (
+            run.scores.some((score) => score.user.id === userData.user_id) ? (
+              <Card>
+                <Card.Body>You have already rated this run.</Card.Body>
+              </Card>
+            ) : (
+              <RatingForm runId={runId} />
+            )
+          ) : (
+            <Card>
+              <Card.Body>Login to rate</Card.Body>
+            </Card>
+          )}
+        </Col>
+      </Row>
       <h2 className="mb-3">Reviews</h2>
       <div className="comment-section">
         {run.scores.map((score) => (
-          <Comment {...score} />
+          <Comment {...score} key={score.user.id} />
         ))}
       </div>
-      {!!userData ? <RatingForm runId={runId} /> : <p>Login to rate</p>}
     </>
   );
 }

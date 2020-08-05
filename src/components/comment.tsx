@@ -4,8 +4,6 @@ import { ArrayOf } from "../utils/types";
 import Card from "react-bootstrap/esm/Card";
 import { Avatar } from "./avatar";
 import { Link } from "react-router-dom";
-import StarFilled from "../icons/StarFilled";
-import StarEmpty from "../icons/StarEmpty";
 import { Stars } from "./stars";
 
 type Score = ArrayOf<ArrayOf<GetSpecificRunSubscription["runs"]>["scores"]>;
@@ -40,12 +38,6 @@ export const Comment: React.FC<Props> = ({
   overall_score,
   summary_comment,
 }) => {
-  const hasAnyComment = Boolean(
-    commentary_comment || gameplay_comment || summary_comment || overall_comment
-  );
-  //   if (!hasAnyComment) {
-  //     return null;
-  //   }
   return (
     <Card className="comment mb-3">
       <Card.Header>
