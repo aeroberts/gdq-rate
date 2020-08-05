@@ -88,6 +88,7 @@ export default function Register() {
                   value={values.display_name}
                   autoComplete="display_name"
                   minLength={3}
+                  maxLength={25}
                   required
                   onChange={handleChange}
                 />

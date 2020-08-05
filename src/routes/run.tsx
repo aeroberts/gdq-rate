@@ -4,6 +4,12 @@ import { GetSpecificRunDocument } from "../generated/graphql";
 import { AuthContext } from "../contexts/gdq-rate-auth";
 import { useCachingSubscription } from "../hooks/useCachingSubscription";
 import RatingForm from "../components/rating-form";
+import { Comment } from "../components/comment";
+import CardColumns from "react-bootstrap/esm/CardColumns";
+import StarFilled from "../icons/StarFilled";
+import StarEmpty from "../icons/StarEmpty";
+import StarHalf from "../icons/StarHalf";
+import { Stars } from "../components/stars";
 
 export default function Run() {
   const { runId } = useParams();
@@ -40,6 +46,26 @@ export default function Run() {
       <p>
         <strong>Category: </strong> {run.category}
       </p>
+      <p>
+        <strong>Commentary: </strong>{" "}
+        <Stars
+          val={run.scores_aggregate.aggregate?.avg?.commentary_score ?? 0}
+        />
+      </p>
+      <p>
+        <strong>Gameplay: </strong>{" "}
+        <Stars val={run.scores_aggregate.aggregate?.avg?.gameplay_score ?? 0} />
+      </p>
+      <p>
+        <strong>Overall: </strong>{" "}
+        <Stars val={run.scores_aggregate.aggregate?.avg?.overall_score ?? 0} />
+      </p>
+      <h2 className="mb-3">Reviews</h2>
+      <div className="comment-section">
+        {run.scores.map((score) => (
+          <Comment {...score} />
+        ))}
+      </div>
       {!!userData ? <RatingForm runId={runId} /> : <p>Login to rate</p>}
     </>
   );

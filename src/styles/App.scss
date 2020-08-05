@@ -9,6 +9,44 @@
   justify-content: center;
 }
 
+.comment-columns {
+  .card-columns {
+    @include media-breakpoint-only(xs) {
+      column-count: 1;
+    }
+    @include media-breakpoint-only(sm) {
+      column-count: 1;
+    }
+    @include media-breakpoint-only(md) {
+      column-count: 2;
+    }
+    @include media-breakpoint-only(lg) {
+      column-count: 3;
+    }
+    @include media-breakpoint-only(xl) {
+      column-count: 3;
+    }
+  }
+}
+
+.comment {
+  .card-header a {
+    div {
+      display: flex;
+    }
+    color: black;
+    text-decoration: none;
+  }
+  .display-name {
+    margin-left: 8px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .display-name:hover {
+    text-decoration: underline;
+  }
+}
 table {
   overflow-x: scroll;
   min-width: 768px;

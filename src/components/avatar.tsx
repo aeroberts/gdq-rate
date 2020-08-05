@@ -90,8 +90,10 @@ export function Avatar({
         className="avatar"
         style={{
           backgroundColor: colorFromString(fullName),
-          width: size,
-          height: size,
+          minWidth: size,
+          minHeight: size,
+          maxWidth: size,
+          maxHeight: size,
           fontSize: size ? `${0.4 * size}pt` : undefined,
         }}
       >

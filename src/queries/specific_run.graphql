@@ -22,6 +22,7 @@ subscription GetSpecificRun($userId: uuid, $loggedIn: Boolean!, $runId: Int!) {
       gameplay_score
       overall_comment
       overall_score
+      summary_comment
       rewatchable
       user {
         avatar_url
