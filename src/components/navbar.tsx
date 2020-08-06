@@ -1,51 +1,107 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
+import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 import { AuthContext } from "../contexts/gdq-rate-auth";
 import { Avatar } from "./avatar";
 
+interface Route {
+  route: string;
+  auth: boolean;
+}
+const profileDropdownRoutes: Record<string, Route> = {
+  Profile: { route: "/profile", auth: true },
+  Settings: { route: "/settings", auth: true },
+  Logout: { route: "/logout", auth: true },
+  Login: { route: "/login", auth: false },
+  Register: { route: "/register", auth: false },
+};
+
+function mapRoutes(
+  auth: Boolean,
+  mapFunc: ([key, val]: [string, Route]) => React.ReactNode
+) {
+  return Object.entries(profileDropdownRoutes)
+    .filter(([_, val]) => val.auth === auth)
+    .map(mapFunc);
+}
+const NavbarLink: React.FC<{ to: string; name: string; hidden?: boolean }> = ({
+  to,
+  name,
+  hidden,
+}) => {
+  return (
+    <Navbar.Text
+      className={hidden ? "d-sm-none justify-content-end" : undefined}
+    >
+      <LinkContainer to={to}>
+        <Nav.Link eventKey={to}>{name}</Nav.Link>
+      </LinkContainer>
+    </Navbar.Text>
+  );
+};
+
+const CustomToggle = React.forwardRef<any, any>(
+  ({ children, onClick }, ref) => (
+    <a
+      href=""
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </a>
+  )
+);
+
 export default function GDQRNavBar() {
   const { userData } = React.useContext(AuthContext);
   return (
-    <Navbar bg="light" expand="sm" className="navigation-bar">
-      <LinkContainer to="/" className="align-self-center">
-        <Navbar.Brand href="#home">GDQ-Rate</Navbar.Brand>
+    <Navbar bg="light" expand="sm" className="navigation-bar" collapseOnSelect>
+      <LinkContainer to="/">
+        <Navbar.Brand>GDQ-Rate</Navbar.Brand>
       </LinkContainer>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <LinkContainer to="/runs" className="align-self-center">
-            <Nav.Link>All Runs</Nav.Link>
-          </LinkContainer>
+        <Nav style={{ width: "100%" }}>
+          <NavbarLink name="All Runs" to="/runs" />
+          <span className="ml-auto d-none d-sm-flex justify-content-end">
+            {userData ? (
+              <Dropdown alignRight id="profile-dropdown">
+                <Dropdown.Toggle as={CustomToggle} id="profile-dropdown">
+                  <Nav.Link>
+                    <Avatar
+                      uri={userData.avatar_url}
+                      name={userData.display_name}
+                      size={40}
+                    />
+                  </Nav.Link>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {mapRoutes(!!userData, ([key, { route }]) => (
+                    <LinkContainer to={route}>
+                      <Dropdown.Item as="button" key={key}>
+                        {key}
+                      </Dropdown.Item>
+                    </LinkContainer>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            ) : (
+              <>
+                <NavbarLink name="Login" to="/login" />
+                <NavbarLink name="Register" to="/register" />
+              </>
+            )}
+          </span>
+          {mapRoutes(!!userData, ([key, { route }]) => (
+            <NavbarLink hidden key={key} name={key} to={route} />
+          ))}
         </Nav>
       </Navbar.Collapse>
-      {userData ? (
-        <Navbar.Text className="justify-content-end">
-          <LinkContainer to="/profile" className="align-self-center">
-            <Nav.Link>
-              <Avatar
-                uri={userData.avatar_url}
-                name={userData.display_name}
-                size={40}
-              />
-            </Nav.Link>
-          </LinkContainer>
-        </Navbar.Text>
-      ) : (
-        <>
-          <Navbar.Text>
-            <LinkContainer to="/login" className="align-self-center">
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
-          </Navbar.Text>
-          <Navbar.Text>
-            <LinkContainer to="/register" className="align-self-center">
-              <Nav.Link>Register</Nav.Link>
-            </LinkContainer>
-          </Navbar.Text>
-        </>
-      )}
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
     </Navbar>
   );
 }

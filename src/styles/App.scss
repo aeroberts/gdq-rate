@@ -57,13 +57,15 @@ table {
   flex-direction: column;
   height: 100vh;
 
-  .navigation-bar {
-    flex: 0 0 auto;
-  }
-
   .main-body {
     flex: 1 1 auto;
     padding-top: 16px;
+  }
+}
+
+#profile-dropdown {
+  a {
+    text-decoration: none;
   }
 }
 

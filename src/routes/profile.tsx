@@ -36,7 +36,7 @@ export default function Profile() {
 
   return (
     <>
-      <h2 style={{ display: "flex", alignItems: "center" }}>
+      <h2 style={{ display: "flex", alignItems: "center" }} className="mb-3">
         <div style={{ marginRight: 12 }}>
           <Avatar uri={user.avatar_url} name={user.display_name} size={40} />
         </div>
@@ -45,7 +45,6 @@ export default function Profile() {
       {data?.scores.map((score) => {
         return <ScoreAccordion key={score.run.run_id} score={score} />;
       })}
-      <Link to="/logout">Logout</Link>
     </>
   );
 }
