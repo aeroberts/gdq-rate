@@ -8,7 +8,8 @@ subscription GetAllRuns($userId: uuid, $loggedIn: Boolean!) {
     runner
     scores_aggregate {
       aggregate {
-        avg {
+        count
+        sum {
           commentary_score
           overall_score
           gameplay_score
