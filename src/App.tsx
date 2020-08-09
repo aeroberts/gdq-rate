@@ -14,6 +14,7 @@ import { getMainDefinition } from "apollo-utilities";
 import { AuthContextProvider } from "./contexts/gdq-rate-auth";
 import GDQRNavBar from "./components/navbar";
 import Profile from "./routes/profile";
+import Settings from "./routes/settings";
 import Runs from "./routes/runs";
 import Login from "./routes/login";
 import Logout from "./routes/logout";
@@ -78,6 +79,9 @@ export default function App() {
                 </Route>
                 <Route path="/profile/:userId?">
                   <Profile />
+                </Route>
+                <Route path="/settings">
+                  <Settings />
                 </Route>
                 <Route path="/login">
                   <Login />
