@@ -1,0 +1,24 @@
+.score-accordion {
+  margin-bottom: 24px;
+
+  .score-accordion-header-row {
+    cursor: pointer;
+  }
+}
+
+.score-subsection {
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  .score-header {
+    font-size: 18px;
+  }
+}
+
+.comment-display {
+  margin-top: 8px;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background: rgb(32, 34, 36);
+  color: #c7c7c7;
+}

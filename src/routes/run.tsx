@@ -38,7 +38,7 @@ function Run() {
     <>
       <Row>
         <Col md className="mb-3">
-          <Card>
+          <Card className="bg-light">
             <Card.Body>
               <Card.Title>{run.game}</Card.Title>
               <p>
@@ -79,14 +79,14 @@ function Run() {
         <Col md className="mb-3">
           {!!userData ? (
             run.scores.some((score) => score.user.id === userData.user_id) ? (
-              <Card>
+              <Card className="bg-light">
                 <Card.Body>You have already rated this run.</Card.Body>
               </Card>
             ) : (
               <RatingForm runId={runId} />
             )
           ) : (
-            <Card>
+            <Card className="bg-light">
               <Card.Body>Login to rate</Card.Body>
             </Card>
           )}

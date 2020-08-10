@@ -45,6 +45,7 @@ function Profile() {
         </div>
         {user.display_name}
       </h2>
+      <hr></hr>
       {data?.scores.map((score) => {
         return <ScoreAccordion key={score.run.run_id} score={score} />;
       })}
