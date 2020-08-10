@@ -1,0 +1,18 @@
+.comment {
+  .card-header a {
+    div {
+      display: flex;
+    }
+    color: $text-color;
+    text-decoration: none;
+  }
+  .display-name {
+    margin-left: 8px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .display-name:hover {
+    text-decoration: underline;
+  }
+}

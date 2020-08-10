@@ -1,0 +1,42 @@
+#login-container {
+  margin-top: 24px;
+
+  .is-submitting {
+    opacity: 0.5;
+  }
+}
+
+.sign-in-button {
+  width: 184px;
+  margin: 4px;
+  margin-bottom: 12px;
+}
+.google-auth-button {
+  width: 191px;
+  a {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    div {
+      height: 46px;
+    }
+  }
+  a:link {
+    div {
+      height: 46px;
+      background-image: url("/btn_google_signin_light_normal_web@2x.png");
+      background-size: cover;
+    }
+  }
+
+  a:focus {
+    div {
+      background-image: url("/btn_google_signin_light_focus_web@2x.png");
+    }
+  }
+  a:active {
+    div {
+      background-image: url("/btn_google_signin_light_pressed_web@2x.png");
+    }
+  }
+}

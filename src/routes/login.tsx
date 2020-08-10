@@ -5,8 +5,11 @@ import Card from "react-bootstrap/Card";
 import { Formik } from "formik";
 import { Redirect } from "react-router-dom";
 import { AuthContext, startRefreshTimer } from "../contexts/gdq-rate-auth";
+import { Page } from "../hocs/page";
 
-export default function Login() {
+export default Page(Login);
+
+function Login() {
   const [error, setError] = React.useState("");
   const [redirect, setRedirect] = React.useState(false);
 

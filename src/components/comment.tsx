@@ -39,7 +39,7 @@ export const Comment: React.FC<Props> = ({
   summary_comment,
 }) => {
   return (
-    <Card className="comment mb-3">
+    <Card className="comment mb-3 bg-light border-dark">
       <Card.Header>
         <Link to={`/profile/${user.id}`}>
           <div>

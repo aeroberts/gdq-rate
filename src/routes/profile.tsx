@@ -6,8 +6,11 @@ import { GetUserRunsDocument } from "../generated/graphql";
 import { firstOfArray } from "../utils/types";
 import ScoreAccordion from "../components/score-accordion";
 import { Avatar } from "../components/avatar";
+import { Page } from "../hocs/page";
 
-export default function Profile() {
+export default Page(Profile);
+
+function Profile() {
   const { userId } = useParams();
   const { userData } = React.useContext(AuthContext);
   let { loading, error, data } = useCachingSubscription(GetUserRunsDocument, {
@@ -42,6 +45,7 @@ export default function Profile() {
         </div>
         {user.display_name}
       </h2>
+      <hr></hr>
       {data?.scores.map((score) => {
         return <ScoreAccordion key={score.run.run_id} score={score} />;
       })}

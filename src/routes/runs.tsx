@@ -3,8 +3,11 @@ import { RunsTable } from "../components/runs-table";
 import { AuthContext } from "../contexts/gdq-rate-auth";
 import { GetAllRunsDocument } from "../generated/graphql";
 import { useCachingSubscription } from "../hooks/useCachingSubscription";
+import { Page } from "../hocs/page";
 
-export default function Runs() {
+export default Page(Runs);
+
+function Runs() {
   const { userData } = React.useContext(AuthContext);
   let { loading, error, data } = useCachingSubscription(GetAllRunsDocument, {
     variables: {

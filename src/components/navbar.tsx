@@ -60,7 +60,13 @@ const CustomToggle = React.forwardRef<any, any>(
 export default function GDQRNavBar() {
   const { userData } = React.useContext(AuthContext);
   return (
-    <Navbar bg="light" expand="sm" className="navigation-bar" collapseOnSelect>
+    <Navbar
+      bg="dark"
+      variant="dark"
+      expand="sm"
+      className="navigation-bar"
+      collapseOnSelect
+    >
       <Nav style={{ width: "100%" }}>
         <LinkContainer to="/">
           <Nav.Link>
