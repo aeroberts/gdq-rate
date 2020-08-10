@@ -1,5 +1,17 @@
 import React from "react";
 
 export default function Home() {
-  return <h1>SGDQ 2020</h1>;
+  return (
+    <>
+      <h1>SGDQ 2020</h1>
+      <div className="embed-responsive embed-responsive-16by9">
+        <iframe
+          src="https://player.twitch.tv/?gamesdonequick&parent=sgdq.shaneschulte.com"
+          className="embed-responsive-item"
+          allowFullScreen
+          frameBorder={0}
+        ></iframe>
+      </div>
+    </>
+  );
 }
