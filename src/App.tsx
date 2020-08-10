@@ -69,7 +69,7 @@ export default function App() {
         <Router>
           <div id="root-container">
             <GDQRNavBar />
-            <div className="main-body container">
+            <div className="main-body">
               <Switch>
                 <Route path="/runs">
                   <Runs />
