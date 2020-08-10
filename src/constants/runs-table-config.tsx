@@ -86,7 +86,7 @@ const columns: Column[] = [
 const myScoresColumns = [
   {
     dataField: "uOverallScore",
-    text: "My Overall Score",
+    text: "My Rating",
   },
 ];
 
