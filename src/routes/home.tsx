@@ -9,7 +9,7 @@ function Home() {
       <h1>SGDQ 2020</h1>
       <div className="embed-responsive embed-responsive-16by9">
         <iframe
-          src="https://player.twitch.tv/?gamesdonequick&parent=sgdq.shaneschulte.com"
+          src="https://player.twitch.tv/?channel=gamesdonequick&parent=sgdq.shaneschulte.com"
           className="embed-responsive-item"
           allowFullScreen
           frameBorder={0}
