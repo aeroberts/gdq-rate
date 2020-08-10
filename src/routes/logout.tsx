@@ -1,8 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { AuthContext, clearRefreshTimer } from "../contexts/gdq-rate-auth";
+import { Page } from "../hocs/page";
 
-export default function Logout() {
+export default Page(Logout);
+
+function Logout() {
   const [redirect, setRedirect] = React.useState(false);
 
   const { refetch } = React.useContext(AuthContext);

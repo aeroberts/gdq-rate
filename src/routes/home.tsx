@@ -1,6 +1,9 @@
 import React from "react";
+import { Page } from "../hocs/page";
 
-export default function Home() {
+export default Page(Home);
+
+function Home() {
   return (
     <>
       <h1>SGDQ 2020</h1>

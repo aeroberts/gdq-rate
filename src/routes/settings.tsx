@@ -1,18 +1,16 @@
-import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { AuthContext, startRefreshTimer } from "../contexts/gdq-rate-auth";
-import { useCachingSubscription } from "../hooks/useCachingSubscription";
-import { GetUserRunsDocument, UpdateUserDocument } from "../generated/graphql";
-import { firstOfArray } from "../utils/types";
-import ScoreAccordion from "../components/score-accordion";
-import { Avatar } from "../components/avatar";
-import Card from "react-bootstrap/esm/Card";
 import { Formik } from "formik";
-import Form from "react-bootstrap/esm/Form";
+import React from "react";
 import Button from "react-bootstrap/esm/Button";
+import Card from "react-bootstrap/esm/Card";
+import Form from "react-bootstrap/esm/Form";
+import { AuthContext } from "../contexts/gdq-rate-auth";
+import { UpdateUserDocument } from "../generated/graphql";
+import { Page } from "../hocs/page";
 import { useTypedMutation } from "../hooks/useTypedMutation";
 
-export default function Settings() {
+export default Page(Settings);
+
+function Settings() {
   const { userData, refetch } = React.useContext(AuthContext);
   const [insertScore, { error }] = useTypedMutation(UpdateUserDocument);
 
