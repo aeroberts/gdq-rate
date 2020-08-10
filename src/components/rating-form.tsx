@@ -21,7 +21,7 @@ function InputRow({
   return (
     <Form.Group controlId={`${name}_comment`}>
       <div style={{ display: "flex" }}>
-        <Form.Label>
+        <Form.Label className="font-weight-bold">
           {name[0].toUpperCase()}
           {name.substr(1)}
         </Form.Label>
@@ -34,6 +34,7 @@ function InputRow({
       </div>
       <Form.Control
         as="textarea"
+        className="input-textarea border-dark"
         placeholder={`additonal comments (optional)`}
         name={`${name}_comment`}
         value={values[`${name}_comment`]}
@@ -48,7 +49,7 @@ export default function RatingForm({ runId }: { runId: number }) {
   });
 
   return (
-    <Card id="rating-container" className="mb-3">
+    <Card id="rating-container" className="mb-3 bg-dark">
       <Card.Body>
         <Formik
           initialValues={{
@@ -119,9 +120,12 @@ export default function RatingForm({ runId }: { runId: number }) {
               />
 
               <Form.Group controlId="summary_comment">
-                <Form.Label className="mb-3">Summary</Form.Label>
+                <Form.Label className="mb-3 font-weight-bold">
+                  Summary
+                </Form.Label>
                 <Form.Control
                   as="textarea"
+                  className="input-textarea border-dark"
                   placeholder="Summary comments (optional)"
                   name="summary_comment"
                   value={values.summary_comment}
@@ -133,6 +137,7 @@ export default function RatingForm({ runId }: { runId: number }) {
                   type="checkbox"
                   name="rewatchable"
                   label="Rewatchable?"
+                  className="font-weight-bold"
                   value={String(values.rewatchable)}
                   onChange={handleChange}
                 />
