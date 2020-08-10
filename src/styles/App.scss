@@ -77,6 +77,14 @@ table {
   }
 }
 
+#settings-container {
+  margin-top: 24px;
+
+  .is-submitting {
+    opacity: 0.5;
+  }
+}
+
 #rating-container {
   .is-submitting {
     opacity: 0.5;
