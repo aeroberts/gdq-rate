@@ -24,19 +24,19 @@
   a:link {
     div {
       height: 46px;
-      background-image: url("/btn_google_signin_light_normal_web@2x.png");
+      background-image: url("/btn_google_signin_dark_normal_web@2x.png");
       background-size: cover;
     }
   }
 
   a:focus {
     div {
-      background-image: url("/btn_google_signin_light_focus_web@2x.png");
+      background-image: url("/btn_google_signin_dark_focus_web@2x.png");
     }
   }
   a:active {
     div {
-      background-image: url("/btn_google_signin_light_pressed_web@2x.png");
+      background-image: url("/btn_google_signin_dark_pressed_web@2x.png");
     }
   }
 }

@@ -20,7 +20,7 @@ function Login() {
   }
 
   return (
-    <Card id="login-container">
+    <Card id="login-container" className="bg-dark">
       <Card.Body>
         <Formik
           initialValues={{
