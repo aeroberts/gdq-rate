@@ -1,0 +1,15 @@
+mutation UpdateUser(
+  $avatarUrl: String!
+  $displayName: String!
+  $userId: uuid!
+) {
+  update_users(
+    where: { id: { _eq: $userId } }
+    _set: { avatar_url: $avatarUrl, display_name: $displayName }
+  ) {
+    returning {
+      avatar_url
+      display_name
+    }
+  }
+}

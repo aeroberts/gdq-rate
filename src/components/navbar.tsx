@@ -67,12 +67,14 @@ export default function GDQRNavBar() {
       className="navigation-bar"
       collapseOnSelect
     >
-      <LinkContainer to="/">
-        <Navbar.Brand>GDQ-Rate</Navbar.Brand>
-      </LinkContainer>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav style={{ width: "100%" }}>
+      <Nav style={{ width: "100%" }}>
+        <LinkContainer to="/">
+          <Nav.Link>
+            <Navbar.Brand>GDQ-Rate</Navbar.Brand>
+          </Nav.Link>
+        </LinkContainer>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
           <NavbarLink name="All Runs" to="/runs" />
           <span className="ml-auto d-none d-sm-flex justify-content-end">
             {userData ? (
@@ -106,8 +108,8 @@ export default function GDQRNavBar() {
           {mapRoutes(!!userData, ([key, { route }]) => (
             <NavbarLink hidden key={key} name={key} to={route} />
           ))}
-        </Nav>
-      </Navbar.Collapse>
+        </Navbar.Collapse>
+      </Nav>
     </Navbar>
   );
 }

@@ -50,7 +50,17 @@ export const RunsTable: React.FC<Props> = ({ runs, loggedIn }) => {
       {(props) => (
         <div className="table-responsive">
           <SearchBar {...props.searchProps} className="search-bar" />
-          <BootstrapTable {...props.baseProps} bordered={false} bootstrap4 />
+          <BootstrapTable
+            {...props.baseProps}
+            bordered={false}
+            bootstrap4
+            defaultSorted={[
+              {
+                dataField: "aOverallScore",
+                order: "desc",
+              },
+            ]}
+          />
         </div>
       )}
     </ToolkitProvider>
