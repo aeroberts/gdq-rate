@@ -11,6 +11,24 @@ $theme-colors: (
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
 
+@media (max-width: 575px) {
+  .navigation-bar {
+    .show,
+    .collapsing {
+      flex-direction: column;
+      display: flex;
+      align-items: flex-start;
+    }
+  }
+}
+
+.navbar-nav {
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 table {
   overflow-x: scroll;
   min-width: 768px;

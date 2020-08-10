@@ -67,7 +67,7 @@ export default function GDQRNavBar() {
       className="navigation-bar"
       collapseOnSelect
     >
-      <Nav style={{ width: "100%" }}>
+      <Nav>
         <LinkContainer to="/">
           <Nav.Link>
             <Navbar.Brand>GDQ-Rate</Navbar.Brand>
