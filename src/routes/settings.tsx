@@ -21,7 +21,7 @@ export default function Settings() {
   }
 
   return (
-    <Card id="settings-container">
+    <Card id="settings-container" className="bg-light">
       <Card.Body>
         <Formik
           initialValues={{
@@ -60,6 +60,7 @@ export default function Settings() {
                   type="text"
                   placeholder="Enter Display Name"
                   name="display_name"
+                  className="border-secondary"
                   value={values.display_name}
                   autoComplete="name"
                   onChange={handleChange}
@@ -74,6 +75,7 @@ export default function Settings() {
                 <Form.Control
                   type="text"
                   placeholder="Enter Avatar URL"
+                  className="border-secondary"
                   name="avatar_url"
                   value={values.avatar_url}
                   autoComplete="avatar_url"

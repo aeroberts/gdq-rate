@@ -1,0 +1,17 @@
+#rating-container {
+  .is-submitting {
+    opacity: 0.5;
+  }
+}
+
+.form-control,
+.input-textarea {
+  background: $input-textarea-bg;
+  color: $text-color;
+
+  &:active,
+  &:focus {
+    background: $input-textarea-bg;
+    color: $text-color;
+  }
+}
