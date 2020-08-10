@@ -4,8 +4,11 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Formik } from "formik";
 import { Redirect } from "react-router-dom";
+import { Page } from "../hocs/page";
 
-export default function Register() {
+export default Page(Register);
+
+function Register() {
   const [error, setError] = React.useState("");
   const [redirect, setRedirect] = React.useState(false);
 

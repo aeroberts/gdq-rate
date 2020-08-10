@@ -9,8 +9,11 @@ import { Stars } from "../components/stars";
 import { AuthContext } from "../contexts/gdq-rate-auth";
 import { GetSpecificRunDocument } from "../generated/graphql";
 import { useCachingSubscription } from "../hooks/useCachingSubscription";
+import { Page } from "../hocs/page";
 
-export default function Run() {
+export default Page(Run);
+
+function Run() {
   const { runId } = useParams();
   const { userData } = React.useContext(AuthContext);
   const { loading, error, data } = useCachingSubscription(
