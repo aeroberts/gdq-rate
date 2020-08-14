@@ -1,11 +1,11 @@
-$body-bg: rgb(32, 34, 36);
-$body-color: #fafafa;
-$text-color: #fafafa;
-$light: rgb(47, 49, 52);
-$dark: rgb(47, 49, 52);
+$body-bg: rgb(46, 49, 53);
+$body-color: #dedede;
+$text-color: #dedede;
+$light: rgb(69, 72, 77);
+$dark: rgb(69, 72, 77);
 
 $theme-colors: (
-  "primary": #18510c,
+  "primary": #5979d1,
 );
 
 // Import Bootstrap and its default variables
@@ -58,7 +58,7 @@ table {
 }
 
 .react-bootstrap-table {
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 hr {
