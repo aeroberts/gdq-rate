@@ -12,7 +12,14 @@ table = soup.find(id="runTable")
 records = []
 
 def valuePrint(*args):
-    print(args)
+    print('(', end='')
+    for i, arg in enumerate(args):
+        print('\'', end='')
+        print(arg.replace('\'', '\'\''), end='')
+        print('\'', end='')
+        if i < len(args) - 1:
+            print(', ', end='')
+    print(')', end='')
 
 def getTagContents(tag):
     res = list(filter(bool, list(tag.stripped_strings)))[0]
@@ -52,5 +59,6 @@ for r in records:
     else:
         print(',')
     valuePrint(r['game'], r['category'], r['runners'], r['duration'], r['platform'], r['startTime'])
+print()
 print("ON CONFLICT (game, category)")
 print("DO UPDATE SET runners=EXCLUDED.runners, duration=EXCLUDED.duration, platform=EXCLUDED.platform, starting_at=EXCLUDED.starting_at;")
