@@ -61,4 +61,4 @@ for r in records:
     valuePrint(r['game'], r['category'], r['runners'], r['duration'], r['platform'], r['startTime'])
 print()
 print("ON CONFLICT (game, category)")
-print("DO UPDATE SET runners=EXCLUDED.runners, duration=EXCLUDED.duration, platform=EXCLUDED.platform, starting_at=EXCLUDED.starting_at;")
+print("DO UPDATE SET runner=EXCLUDED.runner, duration=EXCLUDED.duration, platform=EXCLUDED.platform, starting_at=EXCLUDED.starting_at;")
