@@ -3,6 +3,8 @@ import StarEmpty from "../icons/StarEmpty";
 import StarFilled from "../icons/StarFilled";
 import { Field } from "formik";
 
+const gold = "#e1ad21";
+
 type Action = "enter" | "leave" | "click";
 function SingleButton({
   cb,
@@ -17,12 +19,9 @@ function SingleButton({
   error?: boolean;
   rated?: boolean;
 }) {
-  let color = "gray";
+  let color = gold;
   if (error && !rated) {
     color = "red";
-  }
-  if (hover) {
-    color = "black";
   }
 
   return (
@@ -30,7 +29,7 @@ function SingleButton({
       onMouseEnter={cb.bind(null, "enter")}
       onMouseLeave={cb.bind(null, "leave")}
       onClick={cb.bind(null, "click")}
-      className="mr-1"
+      className="pr-1"
     >
       {filled ? <StarFilled color={color} /> : <StarEmpty color={color} />}
     </div>

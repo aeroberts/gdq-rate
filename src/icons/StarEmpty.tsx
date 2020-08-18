@@ -9,9 +9,8 @@ export default function StarEmpty({ color }: { color?: string }) {
       className="bi bi-star star-svg"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
-      style={{
-        color,
-      }}
+      stroke={"#DDDDDD"}
+      color={color}
     >
       <path
         fillRule="evenodd"
