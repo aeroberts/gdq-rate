@@ -32,36 +32,51 @@ export const ChatBox: React.FC<Props> = ({}) => {
       <Card.Body id="chatbox">
         <div>
           {loading ? "Loading..." : null}
-          {data?.chat.map((i) => (
-            <div className="d-flex chat-line mt-2  justify-content-between">
-              <div className="d-flex">
-                <Link to={`/profile/${i.user?.id}`}>
-                  <OverlayTrigger
-                    placement="right"
-                    overlay={
-                      <Tooltip id="avatar-tooltip">
-                        {i.user?.display_name}
-                      </Tooltip>
-                    }
-                  >
-                    <div>
-                      <Avatar
-                        uri={i.user?.avatar_url}
-                        name={i.user?.display_name}
-                        size={26}
-                      />
-                    </div>
-                  </OverlayTrigger>
-                </Link>
-                <span className="ml-2 flex-nowrap">{i.body}</span>
-              </div>
-              <span className="ml-2 text-muted">
-                {moment(String(i.sent_at)).format("h:mma")}
-              </span>
-            </div>
-          ))}
+          {data?.chat.map((val, i, array) => {
+            const prev = array[i - 1];
+            const prevSentDay = prev?.sent_at
+              ? moment(prev.sent_at).dayOfYear()
+              : 0;
+            const thisSentAt = moment(val.sent_at);
+            const showMarker = prevSentDay !== thisSentAt.dayOfYear();
+            return (
+              <React.Fragment key={thisSentAt.format()}>
+                {showMarker ? (
+                  <span className="d-flex mt-2 text-muted justify-content-center">
+                    {thisSentAt.format("dddd, MMMM Do")}
+                  </span>
+                ) : null}
+                <div className="d-flex chat-line mt-2 justify-content-between">
+                  <div className="d-flex">
+                    <Link to={`/profile/${val.user?.id}`}>
+                      <OverlayTrigger
+                        placement="right"
+                        overlay={
+                          <Tooltip id="avatar-tooltip">
+                            {val.user?.display_name}
+                          </Tooltip>
+                        }
+                      >
+                        <div>
+                          <Avatar
+                            uri={val.user?.avatar_url}
+                            name={val.user?.display_name}
+                            size={26}
+                          />
+                        </div>
+                      </OverlayTrigger>
+                    </Link>
+                    <span className="ml-2 flex-nowrap">{val.body}</span>
+                  </div>
+                  <span className="ml-2 text-muted">
+                    {thisSentAt.format("h:mma")}
+                  </span>
+                </div>
+              </React.Fragment>
+            );
+          })}
           {optimisticBuffer.map((i) => (
-            <div className="d-flex chat-line mt-2 chat-pending">
+            <div key={i} className="d-flex chat-line mt-2 chat-pending">
               <Link to={`/profile/${userData?.user_id}`}>
                 <OverlayTrigger
                   placement="right"
