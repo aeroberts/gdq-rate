@@ -50,7 +50,7 @@ for row in table.find_all('tr'):
         duration.i.decompose()
         recordRow(startTime, game, runners, duration, category, platform)
         
-print("INSERT INTO runs (game, category, runner, duration, platform, starting_at)")
+print("WITH updated as (INSERT INTO runs (game, category, runner, duration, platform, starting_at)")
 print("VALUES")
 comma=False
 for r in records:
@@ -61,4 +61,5 @@ for r in records:
     valuePrint(r['game'], r['category'], r['runners'], r['duration'], r['platform'], r['startTime'])
 print()
 print("ON CONFLICT (game, category)")
-print("DO UPDATE SET runner=EXCLUDED.runner, duration=EXCLUDED.duration, platform=EXCLUDED.platform, starting_at=EXCLUDED.starting_at;")
+print("DO UPDATE SET runner=EXCLUDED.runner, duration=EXCLUDED.duration, platform=EXCLUDED.platform, starting_at=EXCLUDED.starting_at returning run_id)")
+print("DELETE FROM runs WHERE run_id IN (SELECT run_id FROM runs EXCEPT SELECT run_id FROM updated);")
