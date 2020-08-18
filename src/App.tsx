@@ -63,6 +63,10 @@ const client = new ApolloClient({
 });
 
 export default function App() {
+  // XXX: make sure we don't have a `refresh_token` param when we oauth sign in
+  React.useEffect(() => {
+    if (window.location.search) window.location.search = "";
+  }, []);
   return (
     <ApolloProvider client={client}>
       <AuthContextProvider>

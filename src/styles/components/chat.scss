@@ -1,0 +1,19 @@
+.chat-line {
+  a {
+    color: $text-color;
+    text-decoration: none;
+  }
+  .display-name {
+    margin-left: 8px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+#chatbox {
+  max-height: 600px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
