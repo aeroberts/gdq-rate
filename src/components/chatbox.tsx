@@ -25,7 +25,7 @@ export const ChatBox: React.FC<Props> = ({}) => {
         <div>
           {loading ? "Loading..." : null}
           {data?.chat.map((i) => (
-            <div className="d-flex chat-line">
+            <div className="d-flex chat-line mt-2">
               <Link to={`/profile/${i.user?.id}`}>
                 <Avatar
                   uri={i.user?.avatar_url}

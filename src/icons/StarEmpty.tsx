@@ -10,7 +10,7 @@ export default function StarEmpty({ color }: { color?: string }) {
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       stroke={"#DDDDDD"}
-      color={color}
+      color={"#EEEEEE"}
     >
       <path
         fillRule="evenodd"
