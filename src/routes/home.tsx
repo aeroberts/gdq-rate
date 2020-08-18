@@ -29,8 +29,10 @@ function Home() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-12 col-xl-7 mb-3">
-          <h1>SGDQ 2020 - {text}</h1>
+        <h1 className="col">SGDQ 2020 - {text}</h1>
+      </div>
+      <div className="row">
+        <div className="col-12 col-xl-8 mb-3 pr-0">
           <div className="embed-responsive embed-responsive-16by9">
             <iframe
               src="https://player.twitch.tv/?channel=gamesdonequick&parent=sgdq.shaneschulte.com"
@@ -40,7 +42,7 @@ function Home() {
             ></iframe>
           </div>
         </div>
-        <div className="col-12 col-xl-5">
+        <div className="col-12 col-xl-4">
           <Card id="rating-container" className="mb-3 bg-dark">
             <Card.Header>
               <Nav variant="tabs" activeKey={hash || "#chat"}>
