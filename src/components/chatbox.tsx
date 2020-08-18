@@ -11,6 +11,7 @@ import { GetChatHistoryDocument, SendChatDocument } from "../generated/graphql";
 import { Avatar } from "./avatar";
 import { Link } from "react-router-dom";
 import { useTypedMutation } from "../hooks/useTypedMutation";
+import moment from "moment";
 
 interface Props {}
 export const ChatBox: React.FC<Props> = ({}) => {
@@ -32,26 +33,31 @@ export const ChatBox: React.FC<Props> = ({}) => {
         <div>
           {loading ? "Loading..." : null}
           {data?.chat.map((i) => (
-            <div className="d-flex chat-line mt-2">
-              <Link to={`/profile/${i.user?.id}`}>
-                <OverlayTrigger
-                  placement="right"
-                  overlay={
-                    <Tooltip id="avatar-tooltip">
-                      {i.user?.display_name}
-                    </Tooltip>
-                  }
-                >
-                  <div>
-                    <Avatar
-                      uri={i.user?.avatar_url}
-                      name={i.user?.display_name}
-                      size={26}
-                    />
-                  </div>
-                </OverlayTrigger>
-              </Link>
-              <span className="ml-2">{i.body}</span>
+            <div className="d-flex chat-line mt-2  justify-content-between">
+              <div className="d-flex">
+                <Link to={`/profile/${i.user?.id}`}>
+                  <OverlayTrigger
+                    placement="right"
+                    overlay={
+                      <Tooltip id="avatar-tooltip">
+                        {i.user?.display_name}
+                      </Tooltip>
+                    }
+                  >
+                    <div>
+                      <Avatar
+                        uri={i.user?.avatar_url}
+                        name={i.user?.display_name}
+                        size={26}
+                      />
+                    </div>
+                  </OverlayTrigger>
+                </Link>
+                <span className="ml-2 flex-nowrap">{i.body}</span>
+              </div>
+              <span className="ml-2 text-muted">
+                {moment(String(i.sent_at)).format("h:mma")}
+              </span>
             </div>
           ))}
           {optimisticBuffer.map((i) => (
