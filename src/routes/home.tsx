@@ -44,7 +44,7 @@ function Home() {
         </div>
         <div className="col-12 col-xl-4">
           <Card id="rating-container" className="mb-3 bg-dark">
-            <Card.Header>
+            <Card.Header className="chat-rate-header-container">
               <Nav
                 variant="tabs"
                 activeKey={hash || "#chat"}

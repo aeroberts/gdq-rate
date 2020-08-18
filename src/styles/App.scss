@@ -65,11 +65,16 @@ hr {
   background-color: #cccccc;
 }
 
-.chat-rate-tabs {
+.chat-rate-header-container {
+  border-bottom: 1px solid white;
+  background-color: rgb(59, 62, 67);
+
   #chat-link,
   #rate-link {
     &.active {
       color: #fff;
+      border-bottom: 1px solid rgb(69, 72, 77);
+      background: rgb(69, 72, 77);
     }
   }
 }
