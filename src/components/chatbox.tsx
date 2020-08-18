@@ -4,51 +4,38 @@ import Form from "react-bootstrap/esm/Form";
 import FormControl from "react-bootstrap/esm/FormControl";
 import InputGroup from "react-bootstrap/esm/InputGroup";
 import { AuthContext } from "../contexts/gdq-rate-auth";
+import { useCachingSubscription } from "../hooks/useCachingSubscription";
+import { GetChatHistoryDocument, SendChatDocument } from "../generated/graphql";
+import { Avatar } from "./avatar";
+import { Link } from "react-router-dom";
+import { useTypedMutation } from "../hooks/useTypedMutation";
 
 interface Props {}
 export const ChatBox: React.FC<Props> = ({}) => {
   const { userData } = React.useContext(AuthContext);
   const textRef = React.useRef<HTMLInputElement | null>(null);
+
+  const [sendChat] = useTypedMutation(SendChatDocument);
+  const { loading, error, data } = useCachingSubscription(
+    GetChatHistoryDocument
+  );
   return (
     <>
       <Card.Body id="chatbox">
         <div>
-          <p>top</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>hey</p>
-          <p>latest</p>
+          {loading ? "Loading..." : null}
+          {data?.chat.map((i) => (
+            <div className="d-flex chat-line">
+              <Link to={`/profile/${i.user?.id}`}>
+                <Avatar
+                  uri={i.user?.avatar_url}
+                  name={i.user?.display_name}
+                  size={26}
+                />
+              </Link>
+              <span className="ml-2">{i.body}</span>
+            </div>
+          ))}
         </div>
       </Card.Body>
       <Card.Footer>
@@ -60,7 +47,7 @@ export const ChatBox: React.FC<Props> = ({}) => {
               textRef.current.value = "";
             }
             if (val) {
-              // TODO: send chat
+              sendChat({ variables: { body: val } });
             }
           }}
         >

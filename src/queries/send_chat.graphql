@@ -1,0 +1,5 @@
+mutation SendChat($body: String!) {
+  insert_chat(objects: { body: $body }) {
+    affected_rows
+  }
+}

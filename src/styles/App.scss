@@ -65,18 +65,12 @@ hr {
   background-color: #cccccc;
 }
 
-#chatbox {
-  max-height: 600px;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column-reverse;
-}
-
 // Elements & Tools
 @import "colors.scss";
 
 // Components
 @import "components/score-accordion.scss";
+@import "components/chat.scss";
 @import "components/comment.scss";
 @import "components/rating-form.scss";
 @import "components/navbar.scss";

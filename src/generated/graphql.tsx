@@ -69,6 +69,79 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
+/** columns and relationships of "chat" */
+export type Chat = {
+  __typename?: 'chat';
+  body: Scalars['String'];
+  chat_id: Scalars['uuid'];
+  sent_at: Scalars['timestamptz'];
+  /** An object relationship */
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** input type for inserting array relation for remote table "chat" */
+export type Chat_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Insert_Input>;
+};
+
+/** Boolean expression to filter rows from the table "chat". All fields are combined with a logical 'AND'. */
+export type Chat_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Bool_Exp>>>;
+  _not?: Maybe<Chat_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Bool_Exp>>>;
+  body?: Maybe<String_Comparison_Exp>;
+  chat_id?: Maybe<Uuid_Comparison_Exp>;
+  sent_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "chat" */
+export type Chat_Insert_Input = {
+  body?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "chat" */
+export type Chat_Mutation_Response = {
+  __typename?: 'chat_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Chat>;
+};
+
+/** input type for inserting object relation for remote table "chat" */
+export type Chat_Obj_Rel_Insert_Input = {
+  data: Chat_Insert_Input;
+};
+
+/** ordering options when selecting data from "chat" */
+export type Chat_Order_By = {
+  body?: Maybe<Order_By>;
+  chat_id?: Maybe<Order_By>;
+  sent_at?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "chat" */
+export type Chat_Pk_Columns_Input = {
+  chat_id: Scalars['uuid'];
+};
+
+/** select columns of table "chat" */
+export enum Chat_Select_Column {
+  /** column name */
+  Body = 'body',
+  /** column name */
+  ChatId = 'chat_id',
+  /** column name */
+  SentAt = 'sent_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
 /** columns and relationships of "current_run" */
 export type Current_Run = {
   __typename?: 'current_run';
@@ -186,6 +259,10 @@ export type Interval_Comparison_Exp = {
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** insert data into the table: "chat" */
+  insert_chat?: Maybe<Chat_Mutation_Response>;
+  /** insert a single row into the table: "chat" */
+  insert_chat_one?: Maybe<Chat>;
   /** insert data into the table: "scores" */
   insert_scores?: Maybe<Scores_Mutation_Response>;
   /** insert a single row into the table: "scores" */
@@ -198,6 +275,18 @@ export type Mutation_Root = {
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
   update_users_by_pk?: Maybe<Users>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ChatArgs = {
+  objects: Array<Chat_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_OneArgs = {
+  object: Chat_Insert_Input;
 };
 
 
@@ -263,6 +352,10 @@ export enum Order_By {
 /** query root */
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "chat" */
+  chat: Array<Chat>;
+  /** fetch data from the table: "chat" using primary key columns */
+  chat_by_pk?: Maybe<Chat>;
   /** fetch data from the table: "current_run" */
   current_run: Array<Current_Run>;
   /** fetch data from the table: "current_user_v" */
@@ -281,6 +374,22 @@ export type Query_Root = {
   users: Array<Users>;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+};
+
+
+/** query root */
+export type Query_RootChatArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_By_PkArgs = {
+  chat_id: Scalars['uuid'];
 };
 
 
@@ -860,6 +969,10 @@ export type Scores_Variance_Order_By = {
 /** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "chat" */
+  chat: Array<Chat>;
+  /** fetch data from the table: "chat" using primary key columns */
+  chat_by_pk?: Maybe<Chat>;
   /** fetch data from the table: "current_run" */
   current_run: Array<Current_Run>;
   /** fetch data from the table: "current_user_v" */
@@ -878,6 +991,22 @@ export type Subscription_Root = {
   users: Array<Users>;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChatArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_By_PkArgs = {
+  chat_id: Scalars['uuid'];
 };
 
 
@@ -977,6 +1106,8 @@ export type Timestamptz_Comparison_Exp = {
 export type Users = {
   __typename?: 'users';
   avatar_url?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  chats: Array<Chat>;
   created_at: Scalars['timestamptz'];
   display_name?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
@@ -985,6 +1116,16 @@ export type Users = {
   /** An aggregated array relationship */
   scores_aggregate: Scores_Aggregate;
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChatsArgs = {
+  distinct_on?: Maybe<Array<Chat_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Order_By>>;
+  where?: Maybe<Chat_Bool_Exp>;
 };
 
 
@@ -1013,6 +1154,7 @@ export type Users_Bool_Exp = {
   _not?: Maybe<Users_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
   avatar_url?: Maybe<String_Comparison_Exp>;
+  chats?: Maybe<Chat_Bool_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   display_name?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
@@ -1127,6 +1269,21 @@ export type GetAllRunsSubscription = (
   )> }
 );
 
+export type GetChatHistorySubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetChatHistorySubscription = (
+  { __typename?: 'subscription_root' }
+  & { chat: Array<(
+    { __typename?: 'chat' }
+    & Pick<Chat, 'body'>
+    & { user?: Maybe<(
+      { __typename?: 'users' }
+      & Pick<Users, 'avatar_url' | 'display_name' | 'id'>
+    )> }
+  )> }
+);
+
 export type GetCurrentRunSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1154,6 +1311,19 @@ export type InsertScoreMutationVariables = Exact<{
 export type InsertScoreMutation = (
   { __typename?: 'mutation_root' }
   & { insert_scores_one?: Maybe<{ __typename: 'scores' }> }
+);
+
+export type SendChatMutationVariables = Exact<{
+  body: Scalars['String'];
+}>;
+
+
+export type SendChatMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_chat?: Maybe<(
+    { __typename?: 'chat_mutation_response' }
+    & Pick<Chat_Mutation_Response, 'affected_rows'>
+  )> }
 );
 
 export type GetSpecificRunSubscriptionVariables = Exact<{
@@ -1242,8 +1412,10 @@ export type GetUserRunsQuery = (
 
 
 export const GetAllRunsDocument: TypedDocumentNode<GetAllRunsSubscription, GetAllRunsSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"GetAllRuns"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loggedIn"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"runs"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"game"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"category"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"duration"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"platform"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"run_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"runner"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"scores_aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"sum"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commentary_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"overall_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"gameplay_score"},"arguments":[],"directives":[]}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"myScores"},"name":{"kind":"Name","value":"scores"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loggedIn"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commentary_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"overall_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"gameplay_score"},"arguments":[],"directives":[]}]}}]}}]}}]};
+export const GetChatHistoryDocument: TypedDocumentNode<GetChatHistorySubscription, GetChatHistorySubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"GetChatHistory"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"sent_at"},"value":{"kind":"EnumValue","value":"asc"}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"body"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"display_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const GetCurrentRunDocument: TypedDocumentNode<GetCurrentRunSubscription, GetCurrentRunSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"GetCurrentRun"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"current_run"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"game"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"run_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const InsertScoreDocument: TypedDocumentNode<InsertScoreMutation, InsertScoreMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertScore"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commentary_comment"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commentary_score"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameplay_comment"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"gameplay_score"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"overall_comment"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"overall_score"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"rewatchable"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"run_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"summary_comment"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_scores_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"commentary_comment"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commentary_comment"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"commentary_score"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commentary_score"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"gameplay_comment"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameplay_comment"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"gameplay_score"},"value":{"kind":"Variable","name":{"kind":"Name","value":"gameplay_score"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"overall_comment"},"value":{"kind":"Variable","name":{"kind":"Name","value":"overall_comment"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"overall_score"},"value":{"kind":"Variable","name":{"kind":"Name","value":"overall_score"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"rewatchable"},"value":{"kind":"Variable","name":{"kind":"Name","value":"rewatchable"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"run_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"run_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"summary_comment"},"value":{"kind":"Variable","name":{"kind":"Name","value":"summary_comment"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"__typename"},"arguments":[],"directives":[]}]}}]}}]};
+export const SendChatDocument: TypedDocumentNode<SendChatMutation, SendChatMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"SendChat"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"body"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"body"},"value":{"kind":"Variable","name":{"kind":"Name","value":"body"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}}]}}]};
 export const GetSpecificRunDocument: TypedDocumentNode<GetSpecificRunSubscription, GetSpecificRunSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"GetSpecificRun"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loggedIn"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Boolean"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"runId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"runs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"run_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"runId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"game"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"category"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"duration"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"platform"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"run_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"runner"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"scores_aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avg"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commentary_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"overall_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"gameplay_score"},"arguments":[],"directives":[]}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"scores"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commentary_comment"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"commentary_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"gameplay_comment"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"gameplay_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"overall_comment"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"overall_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"summary_comment"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"rewatchable"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"display_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"myScores"},"name":{"kind":"Name","value":"scores"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loggedIn"}}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"commentary_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"overall_score"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"gameplay_score"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const UpdateUserDocument: TypedDocumentNode<UpdateUserMutation, UpdateUserMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"avatarUrl"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"displayName"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"avatar_url"},"value":{"kind":"Variable","name":{"kind":"Name","value":"avatarUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"display_name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"displayName"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar_url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"display_name"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const UserInfoDocument: TypedDocumentNode<UserInfoQuery, UserInfoQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserInfo"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"current_user_v"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"display_name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"avatar_url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]}]}}]}}]};
