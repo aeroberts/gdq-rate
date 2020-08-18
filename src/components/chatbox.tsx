@@ -32,7 +32,7 @@ export const ChatBox: React.FC<Props> = ({}) => {
       <Card.Body id="chatbox">
         <div>
           {loading ? "Loading..." : null}
-          {data?.chat.map((val, i, array) => {
+          {[...(data?.chat || [])].reverse().map((val, i, array) => {
             const prev = array[i - 1];
             const prevSentDay = prev?.sent_at
               ? moment(prev.sent_at).dayOfYear()

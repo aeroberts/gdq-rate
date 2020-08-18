@@ -1,5 +1,5 @@
 subscription GetChatHistory {
-  chat(order_by: { sent_at: asc }) {
+  chat(order_by: { sent_at: desc }) {
     body
     sent_at
     user {
