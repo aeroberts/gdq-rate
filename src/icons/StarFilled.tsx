@@ -6,7 +6,7 @@ export default function StarFilled({ color }: { color?: string }) {
       width="1em"
       height="1em"
       viewBox="0 0 16 16"
-      className="bi bi-star-fill"
+      className="bi bi-star-fill star-svg"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
       style={{

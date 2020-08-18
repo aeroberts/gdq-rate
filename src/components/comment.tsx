@@ -20,9 +20,11 @@ const CommentSection = ({
 }) => {
   return (
     <>
-      <strong>
-        {category} (<Stars val={score} />)
-      </strong>
+      <div className="row mb-2">
+        <strong className="col-auto pr-1">{category} (</strong>
+        <Stars val={score} />
+        <strong className="col-auto pl-0">)</strong>
+      </div>
       <p>{comment}</p>
     </>
   );

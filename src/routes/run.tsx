@@ -36,11 +36,15 @@ function Run() {
 
   return (
     <>
-      <Row>
+      <Row className="run-row">
         <Col md className="mb-3">
           <Card className="bg-light">
             <Card.Body>
-              <Card.Title>{run.game}</Card.Title>
+              <Card.Title className="run-card-title mb-4">
+                Community Score
+              </Card.Title>
+              <Card.Title className="card-subtitle mb-4">{run.game}</Card.Title>
+              <hr className="mt-2 mb-4"></hr>
               <p>
                 <strong>Runner: </strong> {run.runner}
               </p>
@@ -53,22 +57,22 @@ function Run() {
               <p>
                 <strong>Category: </strong> {run.category}
               </p>
-              <p>
-                <strong>Commentary: </strong>{" "}
+              <p className="row">
+                <strong className="col-auto">Commentary: </strong>
                 <Stars
                   val={
                     run.scores_aggregate.aggregate?.avg?.commentary_score ?? 0
                   }
                 />
               </p>
-              <p>
-                <strong>Gameplay: </strong>{" "}
+              <p className="row">
+                <strong className="col-auto">Gameplay: </strong>
                 <Stars
                   val={run.scores_aggregate.aggregate?.avg?.gameplay_score ?? 0}
                 />
               </p>
-              <p>
-                <strong>Overall: </strong>{" "}
+              <p className="row">
+                <strong className="col-auto">Overall: </strong>
                 <Stars
                   val={run.scores_aggregate.aggregate?.avg?.overall_score ?? 0}
                 />

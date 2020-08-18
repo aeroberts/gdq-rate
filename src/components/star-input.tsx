@@ -30,6 +30,7 @@ function SingleButton({
       onMouseEnter={cb.bind(null, "enter")}
       onMouseLeave={cb.bind(null, "leave")}
       onClick={cb.bind(null, "click")}
+      className="mr-1"
     >
       {filled ? <StarFilled color={color} /> : <StarEmpty color={color} />}
     </div>
@@ -62,11 +63,7 @@ function StarButton({
     [setRating]
   );
   return (
-    <div
-      style={{
-        display: "flex",
-      }}
-    >
+    <div className="col d-flex align-items-center no-left-gutter stars-array">
       {Array.apply(null, { length: 5 } as any).map((_, i) => (
         <SingleButton
           cb={cb.bind(null, i + 1)}

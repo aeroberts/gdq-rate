@@ -19,18 +19,19 @@ function InputRow({
   errors: Record<string, any>;
 }) {
   return (
-    <Form.Group controlId={`${name}_comment`}>
-      <div style={{ display: "flex" }}>
-        <Form.Label className="font-weight-bold">
+    <Form.Group
+      controlId={`${name}_comment`}
+      className="form-header-stars-container"
+    >
+      <div className="row form-header-stars-row">
+        <Form.Label className="col-auto font-weight-bold">
           {name[0].toUpperCase()}
           {name.substr(1)}
         </Form.Label>
-        <div className="mb-3 ml-2">
-          <StarInput
-            name={`${name}_score`}
-            error={Boolean(errors[`${name}_score`])}
-          />
-        </div>
+        <StarInput
+          name={`${name}_score`}
+          error={Boolean(errors[`${name}_score`])}
+        />
       </div>
       <Form.Control
         as="textarea"
