@@ -65,6 +65,15 @@ hr {
   background-color: #cccccc;
 }
 
+.chat-rate-tabs {
+  #chat-link,
+  #rate-link {
+    &.active {
+      color: #fff;
+    }
+  }
+}
+
 // Elements & Tools
 @import "colors.scss";
 

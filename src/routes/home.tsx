@@ -45,12 +45,18 @@ function Home() {
         <div className="col-12 col-xl-4">
           <Card id="rating-container" className="mb-3 bg-dark">
             <Card.Header>
-              <Nav variant="tabs" activeKey={hash || "#chat"}>
+              <Nav
+                variant="tabs"
+                activeKey={hash || "#chat"}
+                className="chat-rate-tabs"
+              >
                 <Nav.Item>
-                  <Nav.Link href="#chat">Chat</Nav.Link>
+                  <Nav.Link id="chat-link" href="#chat">
+                    Chat
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link href="#form" disabled={!userData}>
+                  <Nav.Link id="rate-link" href="#form" disabled={!userData}>
                     Rating Form
                   </Nav.Link>
                 </Nav.Item>
