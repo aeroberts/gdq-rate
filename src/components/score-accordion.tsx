@@ -62,7 +62,7 @@ const ScoreAccordion: React.FC<Props> = ({ score }) => {
             <Col className="col-auto">
               <h4>{score.run.game}</h4>
             </Col>
-            <Col className="col-auto d-flex align-items-center">2 of 2</Col>
+            <Stars val={score.overall_score} />
           </Row>
         </Accordion.Toggle>
         <Accordion.Collapse eventKey="0">
