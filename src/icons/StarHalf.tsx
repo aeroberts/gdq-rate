@@ -6,8 +6,10 @@ export default function StarHalf() {
       width="1em"
       height="1em"
       viewBox="0 0 16 16"
-      className="bi bi-star-half"
+      className="bi bi-star-half star-svg"
       fill="currentColor"
+      color={"#e1ad21"}
+      stroke={"#e1ad21"}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
