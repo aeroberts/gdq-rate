@@ -65,6 +65,13 @@ hr {
   background-color: #cccccc;
 }
 
+#chatbox {
+  max-height: 600px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 // Elements & Tools
 @import "colors.scss";
 

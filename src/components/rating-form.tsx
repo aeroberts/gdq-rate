@@ -43,14 +43,14 @@ function InputRow({
     </Form.Group>
   );
 }
-export default function RatingForm({ runId }: { runId: number }) {
+export default function RatingForm({ runId }: { runId?: number | null }) {
   const [insertScore, { error }] = useTypedMutation(InsertScoreDocument, {
     onError: () => {},
   });
 
   return (
-    <Card id="rating-container" className="mb-3 bg-dark">
-      <Card.Body>
+    <Card.Body>
+      {runId ? (
         <Formik
           initialValues={{
             commentary_comment: "",
@@ -149,7 +149,9 @@ export default function RatingForm({ runId }: { runId: number }) {
             </Form>
           )}
         </Formik>
-      </Card.Body>
-    </Card>
+      ) : (
+        <p>No active run right now</p>
+      )}
+    </Card.Body>
   );
 }

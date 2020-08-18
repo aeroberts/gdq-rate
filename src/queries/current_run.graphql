@@ -1,0 +1,6 @@
+subscription GetCurrentRun {
+  current_run {
+    game
+    run_id
+  }
+}

@@ -83,7 +83,9 @@ function Run() {
                 <Card.Body>You have already rated this run.</Card.Body>
               </Card>
             ) : (
-              <RatingForm runId={runId} />
+              <Card id="rating-container" className="mb-3 bg-dark">
+                <RatingForm runId={runId} />
+              </Card>
             )
           ) : (
             <Card className="bg-light">
