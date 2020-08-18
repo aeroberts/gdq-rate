@@ -15,10 +15,16 @@ export const ChatBox: React.FC<Props> = ({}) => {
   const { userData } = React.useContext(AuthContext);
   const textRef = React.useRef<HTMLInputElement | null>(null);
 
+  const [optimisticBuffer, setOptimisticBuffer] = React.useState<string[]>([]);
+
   const [sendChat] = useTypedMutation(SendChatDocument);
-  const { loading, error, data } = useCachingSubscription(
-    GetChatHistoryDocument
-  );
+  const {
+    loading,
+    error,
+    data,
+  } = useCachingSubscription(GetChatHistoryDocument, {
+    onSubscriptionData: () => setOptimisticBuffer([]),
+  });
   return (
     <>
       <Card.Body id="chatbox">
@@ -36,6 +42,18 @@ export const ChatBox: React.FC<Props> = ({}) => {
               <span className="ml-2">{i.body}</span>
             </div>
           ))}
+          {optimisticBuffer.map((i) => (
+            <div className="d-flex chat-line mt-2 chat-pending">
+              <Link to={`/profile/${userData?.user_id}`}>
+                <Avatar
+                  uri={userData?.avatar_url}
+                  name={userData?.display_name}
+                  size={26}
+                />
+              </Link>
+              <span className="ml-2">{i}</span>
+            </div>
+          ))}
         </div>
       </Card.Body>
       <Card.Footer>
@@ -48,6 +66,7 @@ export const ChatBox: React.FC<Props> = ({}) => {
             }
             if (val) {
               sendChat({ variables: { body: val } });
+              setOptimisticBuffer((a) => [...a, val]);
             }
           }}
         >
