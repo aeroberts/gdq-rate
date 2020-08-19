@@ -57,40 +57,39 @@ function Run() {
               <p>
                 <strong>Category: </strong> {run.category}
               </p>
-              <p className="row">
+              <div className="row mb-3">
                 <strong className="col-auto">Commentary: </strong>
                 <Stars
                   val={
                     run.scores_aggregate.aggregate?.avg?.commentary_score ?? 0
                   }
                 />
-              </p>
-              <p className="row">
+              </div>
+              <div className="row mb-3">
                 <strong className="col-auto">Gameplay: </strong>
                 <Stars
                   val={run.scores_aggregate.aggregate?.avg?.gameplay_score ?? 0}
                 />
-              </p>
-              <p className="row">
+              </div>
+              <div className="row mb-3">
                 <strong className="col-auto">Overall: </strong>
                 <Stars
                   val={run.scores_aggregate.aggregate?.avg?.overall_score ?? 0}
                 />
-              </p>
+              </div>
             </Card.Body>
           </Card>
         </Col>
         <Col md className="mb-3">
           {!!userData ? (
-            run.scores.some((score) => score.user.id === userData.user_id) ? (
-              <Card className="bg-light">
-                <Card.Body>You have already rated this run.</Card.Body>
-              </Card>
-            ) : (
-              <Card id="rating-container" className="mb-3 bg-dark">
-                <RatingForm runId={runId} />
-              </Card>
-            )
+            <Card id="rating-container" className="mb-3 bg-dark">
+              <RatingForm
+                runId={runId}
+                hasScore={run.scores.find(
+                  (score) => score.user.id === userData.user_id
+                )}
+              />
+            </Card>
           ) : (
             <Card className="bg-light">
               <Card.Body>Login to rate</Card.Body>

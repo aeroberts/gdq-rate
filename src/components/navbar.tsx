@@ -90,7 +90,7 @@ export default function GDQRNavBar() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   {mapRoutes(!!userData, ([key, { route }]) => (
-                    <LinkContainer to={route}>
+                    <LinkContainer key={key} to={route}>
                       <Dropdown.Item as="button" key={key}>
                         {key}
                       </Dropdown.Item>

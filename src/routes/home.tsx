@@ -1,7 +1,10 @@
 import React from "react";
 import { Page } from "../hocs/page";
 import { useCachingSubscription } from "../hooks/useCachingSubscription";
-import { GetCurrentRunDocument } from "../generated/graphql";
+import {
+  GetCurrentRunDocument,
+  GetSpecificRunDocument,
+} from "../generated/graphql";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import Card from "react-bootstrap/Card";
@@ -25,6 +28,17 @@ function Home() {
     : data?.current_run[0]?.game ?? "No Run in Progress";
 
   const runId = data?.current_run[0]?.run_id;
+
+  const { data: userRunData } = useCachingSubscription(GetSpecificRunDocument, {
+    variables: {
+      loggedIn: !!userData,
+      userId: userData && userData.user_id,
+      runId: runId!,
+    },
+    skip: !runId,
+  });
+
+  const userRun = userRunData ? userRunData.runs[0] : { scores: [] };
 
   return (
     <div className="container-fluid">
@@ -62,7 +76,16 @@ function Home() {
                 </Nav.Item>
               </Nav>
             </Card.Header>
-            {hash !== "#form" ? <ChatBox /> : <RatingForm runId={runId} />}
+            {hash !== "#form" ? (
+              <ChatBox />
+            ) : (
+              <RatingForm
+                runId={runId}
+                hasScore={userRun.scores.find(
+                  (score) => score.user.id === userData?.user_id
+                )}
+              />
+            )}
           </Card>
         </div>
       </div>

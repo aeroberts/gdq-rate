@@ -3,48 +3,23 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
-import { InsertScoreDocument } from "../generated/graphql";
+import {
+  InsertScoreDocument,
+  GetSpecificRunSubscription,
+} from "../generated/graphql";
 import { useTypedMutation } from "../hooks/useTypedMutation";
-import StarInput from "./star-input";
+import { ArrayOf } from "../utils/types";
+import InputRow from "./rating-form-input-row";
 
-function InputRow({
-  handleChange,
-  name,
-  values,
-  errors,
+type Score = ArrayOf<ArrayOf<GetSpecificRunSubscription["runs"]>["scores"]>;
+
+export default function RatingForm({
+  runId,
+  hasScore,
 }: {
-  handleChange(): void;
-  name: string;
-  values: Record<string, any>;
-  errors: Record<string, any>;
+  runId?: number | null;
+  hasScore?: Score | undefined;
 }) {
-  return (
-    <Form.Group
-      controlId={`${name}_comment`}
-      className="form-header-stars-container"
-    >
-      <div className="row form-header-stars-row">
-        <Form.Label className="col-auto font-weight-bold">
-          {name[0].toUpperCase()}
-          {name.substr(1)}
-        </Form.Label>
-        <StarInput
-          name={`${name}_score`}
-          error={Boolean(errors[`${name}_score`])}
-        />
-      </div>
-      <Form.Control
-        as="textarea"
-        className="input-textarea border-dark"
-        placeholder={`additonal comments (optional)`}
-        name={`${name}_comment`}
-        value={values[`${name}_comment`]}
-        onChange={handleChange}
-      />
-    </Form.Group>
-  );
-}
-export default function RatingForm({ runId }: { runId?: number | null }) {
   const [insertScore, { error }] = useTypedMutation(InsertScoreDocument, {
     onError: () => {},
   });
@@ -54,14 +29,14 @@ export default function RatingForm({ runId }: { runId?: number | null }) {
       {runId ? (
         <Formik
           initialValues={{
-            commentary_comment: "",
-            commentary_score: 0,
-            gameplay_comment: "",
-            gameplay_score: 0,
-            overall_comment: "",
-            overall_score: 0,
-            summary_comment: "",
-            rewatchable: false,
+            commentary_comment: hasScore?.commentary_comment || "",
+            commentary_score: hasScore?.commentary_score || 0,
+            gameplay_comment: hasScore?.gameplay_comment || "",
+            gameplay_score: hasScore?.gameplay_score || 0,
+            overall_comment: hasScore?.overall_comment || "",
+            overall_score: hasScore?.overall_score || 0,
+            summary_comment: hasScore?.summary_comment || "",
+            rewatchable: hasScore?.rewatchable || false,
           }}
           validateOnBlur={false}
           validateOnChange={false}
@@ -101,38 +76,21 @@ export default function RatingForm({ runId }: { runId?: number | null }) {
               onSubmit={(handleSubmit as unknown) as any}
               className={isSubmitting ? "is-submitting" : ""}
             >
-              <InputRow
-                handleChange={handleChange as any}
-                name="commentary"
-                values={values}
-                errors={errors}
-              />
-              <InputRow
-                handleChange={handleChange as any}
-                name="gameplay"
-                values={values}
-                errors={errors}
-              />
-              <InputRow
-                handleChange={handleChange as any}
-                name="overall"
-                values={values}
-                errors={errors}
-              />
+              {hasScore ? <h3 className="mb-3">Your rating</h3> : null}
+              {["commentary", "gameplay", "overall", "summary"].map((type) => {
+                return (
+                  <InputRow
+                    handleChange={handleChange as any}
+                    key={type}
+                    name={type}
+                    values={values}
+                    errors={errors}
+                    hasScore={hasScore}
+                    showStars={type !== "summary"}
+                  />
+                );
+              })}
 
-              <Form.Group controlId="summary_comment">
-                <Form.Label className="mb-3 font-weight-bold">
-                  Summary
-                </Form.Label>
-                <Form.Control
-                  as="textarea"
-                  className="input-textarea border-dark"
-                  placeholder="Summary comments (optional)"
-                  name="summary_comment"
-                  value={values.summary_comment}
-                  onChange={handleChange}
-                />
-              </Form.Group>
               <Form.Group controlId="rewatchable">
                 <Form.Check
                   type="checkbox"
@@ -144,9 +102,11 @@ export default function RatingForm({ runId }: { runId?: number | null }) {
                 />
               </Form.Group>
               {error ? <p className="text-danger">{error.message}</p> : null}
-              <Button variant="primary" type="submit" disabled={isSubmitting}>
-                Submit
-              </Button>
+              {!hasScore ? (
+                <Button variant="primary" type="submit" disabled={isSubmitting}>
+                  Submit
+                </Button>
+              ) : null}
             </Form>
           )}
         </Formik>
