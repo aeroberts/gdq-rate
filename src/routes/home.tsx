@@ -14,13 +14,12 @@ import { ChatBox } from "../components/chatbox";
 import { twitchPlayerNode } from "../components/twitch_player";
 import * as portals from "react-reverse-portal";
 
-export default Page(Home, { fullWidth: true, disablePopoutPlayer: true });
+export default Page(Home, { fullWidth: true });
 
 function Home() {
   const { hash } = useLocation();
   const { userData } = React.useContext(AuthContext);
-  const [tabKey, setTabKey] = React.useState("chat");
-  let { loading, error, data } = useCachingSubscription(GetCurrentRunDocument);
+  let { loading, data } = useCachingSubscription(GetCurrentRunDocument);
 
   const text = loading
     ? "Loading..."

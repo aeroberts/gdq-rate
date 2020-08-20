@@ -80,6 +80,12 @@ export default function App() {
             <GDQRNavBar />
             <div className="main-body">
               <Switch>
+                <Route path="/" exact></Route>
+                <Route>
+                  <portals.OutPortal node={twitchPlayerNode} popout />
+                </Route>
+              </Switch>
+              <Switch>
                 <Route path="/runs">
                   <Runs />
                 </Route>
