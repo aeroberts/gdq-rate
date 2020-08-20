@@ -1,5 +1,6 @@
 import "./styles/App.css";
 import React from "react";
+import * as portals from "react-reverse-portal";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -21,6 +22,7 @@ import Logout from "./routes/logout";
 import Register from "./routes/register";
 import Home from "./routes/home";
 import Run from "./routes/run";
+import { twitchPlayerNode, TwitchPlayer } from "./components/twitch_player";
 
 const httpLink = new HttpLink({
   uri: `${window.location.origin}/hasura/v1/graphql`,
@@ -69,6 +71,9 @@ export default function App() {
   }, []);
   return (
     <ApolloProvider client={client}>
+      <portals.InPortal node={twitchPlayerNode}>
+        <TwitchPlayer />
+      </portals.InPortal>
       <AuthContextProvider>
         <Router>
           <div id="root-container">

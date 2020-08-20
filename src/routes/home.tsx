@@ -5,17 +5,16 @@ import {
   GetCurrentRunDocument,
   GetSpecificRunDocument,
 } from "../generated/graphql";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import RatingForm from "../components/rating-form";
 import { AuthContext } from "../contexts/gdq-rate-auth";
-import { useLocation, HashRouter, Route } from "react-router-dom";
-import Switch from "react-bootstrap/esm/Switch";
+import { useLocation } from "react-router-dom";
 import { ChatBox } from "../components/chatbox";
+import { twitchPlayerNode } from "../components/twitch_player";
+import * as portals from "react-reverse-portal";
 
-export default Page(Home, { fullWidth: true });
+export default Page(Home, { fullWidth: true, disablePopoutPlayer: true });
 
 function Home() {
   const { hash } = useLocation();
@@ -46,15 +45,8 @@ function Home() {
         <h1 className="col">SGDQ 2020 - {text}</h1>
       </div>
       <div className="row">
-        <div className="col-12 col-xl-8 mb-3 pr-0">
-          <div className="embed-responsive embed-responsive-16by9">
-            <iframe
-              src="https://player.twitch.tv/?channel=gamesdonequick&parent=sgdq.shaneschulte.com"
-              className="embed-responsive-item"
-              allowFullScreen
-              frameBorder={0}
-            ></iframe>
-          </div>
+        <div className="col-12 col-xl-8 mb-3 pr-0 pl-xl-3 pl-0">
+          <portals.OutPortal node={twitchPlayerNode} popout={false} />
         </div>
         <div className="col-12 col-xl-4">
           <Card id="rating-container" className="mb-3 bg-dark">

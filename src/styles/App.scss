@@ -66,6 +66,29 @@ hr {
   background-color: #cccccc;
 }
 
+.popout-player {
+  width: 50%;
+  max-width: 480px;
+  position: fixed;
+  bottom: 20px;
+  z-index: 10;
+  left: 20px;
+  .handle {
+    background-color: #1a1a1a;
+    height: 28px;
+    cursor: move;
+    display: flex;
+    justify-content: flex-end;
+    span {
+      cursor: pointer;
+      color: #45484d;
+      padding-left: 12px;
+      padding-right: 12px;
+      font-weight: bold;
+    }
+  }
+}
+
 .chat-rate-header-container {
   border-bottom: 1px solid white;
   background-color: rgb(59, 62, 67);
