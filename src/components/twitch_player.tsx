@@ -19,7 +19,7 @@ export const TwitchPlayer: React.FC<Props> = ({ popout }) => {
     () => (
       <div className="embed-responsive embed-responsive-16by9">
         <iframe
-          src="http://player.twitch.tv/?channel=gamesdonequick&parent=sgdq.shaneschulte.com"
+          src="https://player.twitch.tv/?channel=gamesdonequick&parent=sgdq.shaneschulte.com"
           className="embed-responsive-item"
           allowFullScreen
           frameBorder={0}
