@@ -2,7 +2,7 @@
   "name": "gdq-rate",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://sgdq.shaneschulte.com",
+  "proxy": "https://gdq.cgs.dev",
   "dependencies": {
     "@apollo/client": "^3.0.2",
     "@apollo/react-common": "^3.1.4",

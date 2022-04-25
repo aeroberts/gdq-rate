@@ -38,7 +38,7 @@ services:
       GOOGLE_CLIENT_SECRET: "${GOOGLE_CLIENT_SECRET}"
       REDIRECT_URL_SUCCESS: "https://sgdq.shaneschulte.com/"
       REDIRECT_URL_ERROR: "https://sgdq.shaneschulte.com/"
-      SERVER_URL: "https://sgdq.shaneschulte.com/rest"
+      SERVER_URL: "https://gdq.cgs.dev/rest"
 volumes:
   db_data:
     external:

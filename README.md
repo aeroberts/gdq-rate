@@ -6,7 +6,7 @@ I did some stuff
 -   there is a basic rating form (if you're signed in)
     -   this needs lots of love still
 -   oauth working
--   deployed to https://sgdq.shaneschulte.com/
+-   deployed to https://gdq.cgs.dev/
     -   if you want to deploy, go to console and run this mutation:
 
 ```graphql
@@ -18,4 +18,4 @@ mutation DeployFrontend {
 }
 ```
 
--   console moved to https://sgdq.shaneschulte.com/hasura/console
+-   console moved to https://gdq.cgs.dev/hasura/console
